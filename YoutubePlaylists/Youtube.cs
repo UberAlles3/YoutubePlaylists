@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using YoutubeSharpApi;
 using YoutubeSharpApi.Models;
@@ -11,9 +13,30 @@ namespace YoutubePlaylists
     public class Youtube
     {
         private static string _apiKey = "AIzaSyA1B4A-V8Dp3lFYnSQjJEoABvpPQyDraRw"; // https://developers.google.com/youtube/v3/getting-started
+        //private List<ChannelOutput.Playlist> Playlists = new List<ChannelOutput.Playlist>();
 
+        public List<ChannelOutput.Playlist> GetPlaylistsByChannelId(string channelId, bool sortByTitle = true)
+        {
+            var youtubeClient = new YoutubeClient(_apiKey);
 
+            Debug.WriteLine($"--- --- --- --- Channel Playlists --- --- --- ---");
+            var responseChannel = Task.Run(() => youtubeClient.GetChannelAsync(new ChannelInput
+            {
+                ChannelId = channelId
+            }, CancellationToken.None)).Result;
 
+            foreach (var item in responseChannel.PlaylistData)
+            {
+                Console.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.PlaylistId})");
+            }
 
+            if(sortByTitle)
+            {
+                List<ChannelOutput.Playlist> SortedList = responseChannel.PlaylistData.OrderBy(o => o.Title).ToList();
+                return SortedList;
+            }
+
+            return responseChannel.PlaylistData;
+        }
     }
 }

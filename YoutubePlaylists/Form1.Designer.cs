@@ -32,14 +32,15 @@ namespace YoutubePlaylists
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtChannelId = new System.Windows.Forms.TextBox();
+            this.btnGetPlaylists = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(12, 56);
+            this.panel1.Location = new System.Drawing.Point(12, 78);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(305, 508);
+            this.panel1.Size = new System.Drawing.Size(305, 486);
             this.panel1.TabIndex = 0;
             // 
             // label1
@@ -58,11 +59,22 @@ namespace YoutubePlaylists
             this.txtChannelId.Size = new System.Drawing.Size(230, 23);
             this.txtChannelId.TabIndex = 2;
             // 
+            // btnGetPlaylists
+            // 
+            this.btnGetPlaylists.Location = new System.Drawing.Point(87, 41);
+            this.btnGetPlaylists.Name = "btnGetPlaylists";
+            this.btnGetPlaylists.Size = new System.Drawing.Size(230, 23);
+            this.btnGetPlaylists.TabIndex = 3;
+            this.btnGetPlaylists.Text = "Get Playlists";
+            this.btnGetPlaylists.UseVisualStyleBackColor = true;
+            this.btnGetPlaylists.Click += new System.EventHandler(this.btnGetPlaylists_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(978, 626);
+            this.Controls.Add(this.btnGetPlaylists);
             this.Controls.Add(this.txtChannelId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
@@ -79,6 +91,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtChannelId;
+        private System.Windows.Forms.Button btnGetPlaylists;
     }
 }
 

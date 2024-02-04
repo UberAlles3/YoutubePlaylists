@@ -19,6 +19,9 @@ namespace YoutubePlaylists
         //private static string _playlistId = "PLd4S0e5MPnVi3fD3O0VKFLyUwbiNrsHRF"; // https://www.youtube.com/playlist?list=PLzByySESNL7GKiOXOs7ew5vEFBxuJvf0D
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
 
+        Youtube _youtube = new Youtube();
+        List<ChannelOutput.Playlist> Playlists;
+
         public Form1()
         {
             InitializeComponent();
@@ -40,6 +43,11 @@ namespace YoutubePlaylists
             //{
             //    Debug.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.PlaylistId})");
             //}
+        }
+
+        private void btnGetPlaylists_Click(object sender, EventArgs e)
+        {
+            Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
         }
     }
 }
