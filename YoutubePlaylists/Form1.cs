@@ -30,24 +30,33 @@ namespace YoutubePlaylists
         private void Form1_Load(object sender, EventArgs e)
         {
             txtChannelId.Text = _channelId;
-            
-            //var youtubeClient = new YoutubeClient(_apiKey);
-
-            //Console.WriteLine($"--- --- --- --- Channel Playlists --- --- --- ---");
-            //var responseChannel = Task.Run(() => youtubeClient.GetChannelAsync(new ChannelInput
-            //{
-            //    ChannelId = _channelId
-            //}, CancellationToken.None)).Result;
-
-            //foreach (var item in responseChannel.PlaylistData)
-            //{
-            //    Debug.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.PlaylistId})");
-            //}
         }
 
         private void btnGetPlaylists_Click(object sender, EventArgs e)
         {
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
+
+            List<CheckBox> checkboxlList = DynamicControls.CreateDynamicControls<CheckBox>(panel1, "chkboxPlaylist", Playlists.Count, 20, 0, 10, 10, 20, 20);
+            List<Label> lableList = DynamicControls.CreateDynamicControls<Label>(panel1, "lblPlaylist", Playlists.Count, 20, 0, 12, 30, 20, 200);
+            int i = 0;
+
+            //.ElementAt(0);
+            foreach (ChannelOutput.Playlist item in Playlists)
+            {
+                checkboxlList.ElementAt(i).CheckedChanged += new EventHandler(chkboxPlaylist_CheckedChanged);
+                lableList.ElementAt(i).Text = item.Title + $"  ({item.ItemCount})";
+                i++;
+            }
+        }
+
+        private void chkboxPlaylist_CheckedChanged(object sender, EventArgs e)
+        {
+           if(((CheckBox)sender).Checked == true)
+            {
+                // Get videos
+                int i = 0;
+
+            }
         }
     }
 }
