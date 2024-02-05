@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using YoutubeSharpApi;
 using YoutubeSharpApi.Models;
+using Google.Apis.YouTube.v3;
+using Google.Apis.Services;
 
 namespace YoutubePlaylists
 {
@@ -65,7 +67,7 @@ namespace YoutubePlaylists
                 List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", Videos.Count, 80, 0, 12, 120, 20, 360);
                 List<Label> labelDescList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoDesc", Videos.Count, 80, 0, 32, 120, 16, 360);
                 List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", Videos.Count, 80, 0, 52, 120, 20, 100);
-                List<Button> btnRemoveList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnRemove", Videos.Count, 80, 0, 48, 260, 24, 80);
+                List<Button> btnRemoveList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnRemove", Videos.Count, 80, 0, 48, 320, 24, 80);
 
                 int i = 0;
                 foreach (PlaylistOutput.Videos item in Videos)
@@ -78,11 +80,11 @@ namespace YoutubePlaylists
                         txtDeletedVideos.Text += item.VideoId + Environment.NewLine;
                         labelList.ElementAt(i).Text = item.Title;
                         labelDescList.ElementAt(i).Text = item.Description;
-                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                        labelVideoIdList.ElementAt(i).Width = 180;
+                        labelVideoIdList.ElementAt(i).Text = $"LongId: {item.PlaylistVideoId.Substring(0, 15)}";
                         btnRemoveList.ElementAt(i).Text = "Remove";
                         btnRemoveList.ElementAt(i).Visible = true;
                         btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
-
                     }
                     else
                     {
@@ -90,8 +92,11 @@ namespace YoutubePlaylists
                         pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
                         labelList.ElementAt(i).Text = item.Title;
                         labelDescList.ElementAt(i).Text = item.Description;
+                        labelVideoIdList.ElementAt(i).Width = 120;
                         labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
-                        btnRemoveList.ElementAt(i).Visible = false;
+                        btnRemoveList.ElementAt(i).Text = "Remove";
+                        btnRemoveList.ElementAt(i).Visible = true;
+                        btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                     }
                     i++;
                 }
@@ -101,7 +106,18 @@ namespace YoutubePlaylists
         private void btnRemove_Click(object sender, EventArgs e)
         {
             int element = (int)((Button)sender).Tag;
+            string playlistVideoId = Videos.ElementAt(element).PlaylistVideoId;
 
+            var result = _youtube.RemoveItemFromPlaylist(playlistVideoId);
+
+            if (result.Contains("Playlist item not found."))
+            {
+                MessageBox.Show("Playlist item not found.");
+            }
+            else if (result.Contains("Errors"))
+            {
+                MessageBox.Show(result);
+            }
         }
     }
 }

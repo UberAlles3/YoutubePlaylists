@@ -63,6 +63,13 @@ namespace YoutubePlaylists
             return responsePlaylist.VideosData;
         }
 
+        public string RemoveItemFromPlaylist(string playlistVideoId)
+        {
+            var youtubeClient = new YoutubeClient(_apiKey);
 
+            var result = Task.Run(() => youtubeClient.RemovePlaylistItemAsync(playlistVideoId)).Result;
+
+            return result;
+        }
     }
 }
