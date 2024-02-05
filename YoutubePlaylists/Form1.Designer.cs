@@ -34,6 +34,8 @@ namespace YoutubePlaylists
             this.txtChannelId = new System.Windows.Forms.TextBox();
             this.btnGetPlaylists = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtDeletedVideos = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
@@ -80,11 +82,30 @@ namespace YoutubePlaylists
             this.panel2.Size = new System.Drawing.Size(530, 486);
             this.panel2.TabIndex = 1;
             // 
+            // txtDeletedVideos
+            // 
+            this.txtDeletedVideos.Location = new System.Drawing.Point(910, 95);
+            this.txtDeletedVideos.Multiline = true;
+            this.txtDeletedVideos.Name = "txtDeletedVideos";
+            this.txtDeletedVideos.Size = new System.Drawing.Size(162, 383);
+            this.txtDeletedVideos.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(910, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Deleted Video Ids";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(978, 626);
+            this.ClientSize = new System.Drawing.Size(1094, 626);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtDeletedVideos);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnGetPlaylists);
             this.Controls.Add(this.txtChannelId);
@@ -105,6 +126,8 @@ namespace YoutubePlaylists
         private System.Windows.Forms.TextBox txtChannelId;
         private System.Windows.Forms.Button btnGetPlaylists;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox txtDeletedVideos;
+        private System.Windows.Forms.Label label2;
     }
 }
 

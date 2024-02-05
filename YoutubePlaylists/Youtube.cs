@@ -38,5 +38,31 @@ namespace YoutubePlaylists
 
             return responseChannel.PlaylistData;
         }
+
+        public List<PlaylistOutput.Videos> GetVideosByPlaylistId(string playlistId, bool sortByTitle = true)
+        {
+            var youtubeClient = new YoutubeClient(_apiKey);
+
+            Debug.WriteLine($"--- --- --- --- Playlist Videos --- --- --- ---");
+            var responsePlaylist = Task.Run(() => youtubeClient.GetPlayListAsync(new PlaylistInput
+            {
+                PlaylistId = playlistId
+            }, CancellationToken.None)).Result;
+
+            foreach (var item in responsePlaylist.VideosData)
+            {
+                Console.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.VideoId})");
+            }
+
+            if (sortByTitle)
+            {
+                List<PlaylistOutput.Videos> SortedList = responsePlaylist.VideosData.OrderBy(o => o.Title).ToList();
+                return SortedList;
+            }
+
+            return responsePlaylist.VideosData;
+        }
+
+
     }
 }

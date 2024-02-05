@@ -23,6 +23,7 @@ namespace YoutubePlaylists
                 newControl.Left = (horizontalSpacing * i) + controlLeft;
                 newControl.Height = controlHeight;
                 newControl.Width = controlWidth;
+                newControl.Tag = i;
                 dynamicControls.Add(newControl);
                 containerControl.Controls.Add(newControl);
             }
