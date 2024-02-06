@@ -36,6 +36,7 @@ namespace YoutubePlaylists
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtDeletedVideos = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblPlaylistName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
@@ -99,11 +100,22 @@ namespace YoutubePlaylists
             this.label2.TabIndex = 5;
             this.label2.Text = "Deleted Video Ids";
             // 
+            // lblPlaylistName
+            // 
+            this.lblPlaylistName.AutoSize = true;
+            this.lblPlaylistName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPlaylistName.Location = new System.Drawing.Point(355, 48);
+            this.lblPlaylistName.Name = "lblPlaylistName";
+            this.lblPlaylistName.Size = new System.Drawing.Size(112, 20);
+            this.lblPlaylistName.TabIndex = 6;
+            this.lblPlaylistName.Text = "lblPlaylistName";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 626);
+            this.Controls.Add(this.lblPlaylistName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDeletedVideos);
             this.Controls.Add(this.panel2);
@@ -128,6 +140,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox txtDeletedVideos;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblPlaylistName;
     }
 }
 

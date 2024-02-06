@@ -33,6 +33,7 @@ namespace YoutubePlaylists
         private void Form1_Load(object sender, EventArgs e)
         {
             txtChannelId.Text = _channelId;
+            lblPlaylistName.Text = "";
         }
 
         private void btnGetPlaylists_Click(object sender, EventArgs e)
@@ -56,8 +57,10 @@ namespace YoutubePlaylists
         {
             if (((CheckBox)sender).Checked == true)
             {
-                // Get videos
                 int element = (int)((CheckBox)sender).Tag;
+                lblPlaylistName.Text = Playlists.ElementAt(element).Title;
+
+                // Get videos
                 string playlistId = Playlists.ElementAt(element).PlaylistId;
                 Videos = _youtube.GetVideosByPlaylistId(playlistId);
 
@@ -80,7 +83,6 @@ namespace YoutubePlaylists
                         txtDeletedVideos.Text += item.VideoId + Environment.NewLine;
                         labelList.ElementAt(i).Text = item.Title;
                         labelDescList.ElementAt(i).Text = item.Description;
-                        //labelVideoIdList.ElementAt(i).Width = 260;
                         labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId} LongId: {item.PlaylistVideoId.Substring(0, 8)}";
                         btnRemoveList.ElementAt(i).Text = "Remove";
                         btnRemoveList.ElementAt(i).Visible = true;
@@ -92,7 +94,6 @@ namespace YoutubePlaylists
                         pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
                         labelList.ElementAt(i).Text = item.Title;
                         labelDescList.ElementAt(i).Text = item.Description;
-                        //labelVideoIdList.ElementAt(i).Width = 260;
                         labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId} LongId: {item.PlaylistVideoId.Substring(0, 8)}";
                         btnRemoveList.ElementAt(i).Text = "Remove";
                         btnRemoveList.ElementAt(i).Visible = true;
