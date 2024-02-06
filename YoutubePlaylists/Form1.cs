@@ -13,6 +13,7 @@ using YoutubeSharpApi;
 using YoutubeSharpApi.Models;
 using Google.Apis.YouTube.v3;
 using Google.Apis.Services;
+using System.IO;
 
 namespace YoutubePlaylists
 {
@@ -20,6 +21,7 @@ namespace YoutubePlaylists
     {
         //private static string _playlistId = "PLd4S0e5MPnVi3fD3O0VKFLyUwbiNrsHRF"; // https://www.youtube.com/playlist?list=PLzByySESNL7GKiOXOs7ew5vEFBxuJvf0D
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
+        private static string _playlistId = "";
 
         Youtube _youtube = new Youtube();
         List<ChannelOutput.Playlist> Playlists;
@@ -59,6 +61,7 @@ namespace YoutubePlaylists
             {
                 int element = (int)((CheckBox)sender).Tag;
                 lblPlaylistName.Text = Playlists.ElementAt(element).Title;
+                _playlistId = Playlists.ElementAt(element).PlaylistId;
 
                 // Get videos
                 string playlistId = Playlists.ElementAt(element).PlaylistId;
@@ -120,6 +123,26 @@ namespace YoutubePlaylists
                 MessageBox.Show(result);
             }
             ((Button)sender).Visible = false;
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), lblPlaylistName.Text.Replace("/", "-") + ".csv");
+
+            using (var file = File.CreateText(path))
+            {
+                foreach (var data in Videos)
+                {
+                    string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")}{data.PlaylistVideoId},{data.VideoId}";
+                    line += $",{Truncate(data.Title.Replace(",", " - "), 30)},{Truncate(data.Description.Replace(",", " - "), 40)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
+                    file.WriteLine(line);
+                }
+            }
+        }
+        public string Truncate(string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
         }
     }
 }

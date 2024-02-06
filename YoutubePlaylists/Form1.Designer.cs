@@ -37,6 +37,7 @@ namespace YoutubePlaylists
             this.txtDeletedVideos = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblPlaylistName = new System.Windows.Forms.Label();
+            this.btnExport = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -103,18 +104,30 @@ namespace YoutubePlaylists
             // lblPlaylistName
             // 
             this.lblPlaylistName.AutoSize = true;
-            this.lblPlaylistName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPlaylistName.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblPlaylistName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lblPlaylistName.Location = new System.Drawing.Point(355, 48);
             this.lblPlaylistName.Name = "lblPlaylistName";
-            this.lblPlaylistName.Size = new System.Drawing.Size(112, 20);
+            this.lblPlaylistName.Size = new System.Drawing.Size(121, 21);
             this.lblPlaylistName.TabIndex = 6;
             this.lblPlaylistName.Text = "lblPlaylistName";
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(539, 41);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(82, 27);
+            this.btnExport.TabIndex = 7;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 626);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblPlaylistName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDeletedVideos);
@@ -141,6 +154,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.TextBox txtDeletedVideos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPlaylistName;
+        private System.Windows.Forms.Button btnExport;
     }
 }
 
