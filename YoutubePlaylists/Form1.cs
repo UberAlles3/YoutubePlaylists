@@ -72,7 +72,8 @@ namespace YoutubePlaylists
                 List<PictureBox> pictureList = DynamicControls.CreateDynamicControls<PictureBox>(panel2, "picVideo", Videos.Count, 80, 0, 12, 10, 60, 100);
                 List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", Videos.Count, 80, 0, 12, 120, 20, 360);
                 List<Label> labelDescList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoDesc", Videos.Count, 80, 0, 32, 120, 16, 360);
-                List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", Videos.Count, 80, 0, 52, 120, 20, 300);
+                List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", Videos.Count, 80, 0, 52, 120, 20, 160);
+                List<Button> btnGetInfoList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnGetInfo", Videos.Count, 80, 0, 48, 350, 24, 80);
                 List<Button> btnRemoveList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnRemove", Videos.Count, 80, 0, 48, 440, 24, 60);
 
                 int i = 0;
@@ -86,9 +87,10 @@ namespace YoutubePlaylists
                         txtDeletedVideos.Text += item.VideoId + Environment.NewLine;
                         labelList.ElementAt(i).Text = item.Title;
                         labelDescList.ElementAt(i).Text = item.Description;
-                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId} LongId: {item.PlaylistVideoId.Substring(0, 8)}";
-                        btnRemoveList.ElementAt(i).Text = "Remove";
-                        btnRemoveList.ElementAt(i).Visible = true;
+                        //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 7.0F, FontStyle.Regular);
+                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                        btnGetInfoList.ElementAt(i).Text = "Remove";
+                        //btnRemoveList.ElementAt(i).Visible = true;
                         btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                     }
                     else
@@ -97,16 +99,38 @@ namespace YoutubePlaylists
                         pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
                         labelList.ElementAt(i).Text = item.Title;
                         labelDescList.ElementAt(i).Text = item.Description;
-                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId} LongId: {item.PlaylistVideoId.Substring(0, 8)}";
+                        //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 6.0F, FontStyle.Regular);
+                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                        btnGetInfoList.ElementAt(i).Text = "Get Info";
+                        //btnRemoveList.ElementAt(i).Visible = true;
+                        btnGetInfoList.ElementAt(i).Click += new EventHandler(btnGetInfo_Click);
                         btnRemoveList.ElementAt(i).Text = "Remove";
-                        btnRemoveList.ElementAt(i).Visible = true;
+                        //btnRemoveList.ElementAt(i).Visible = true;
                         btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                     }
                     i++;
                 }
             }
         }
-        
+
+        private void btnGetInfo_Click(object sender, EventArgs e)
+        {
+            int element = (int)((Button)sender).Tag;
+            string playlistVideoId = Videos.ElementAt(element).PlaylistVideoId;
+
+            var result = _youtube.RemoveItemFromPlaylist(playlistVideoId);
+
+            if (result.Contains("Playlist item not found."))
+            {
+                MessageBox.Show("Playlist item not found.");
+            }
+            else if (result.Contains("Errors"))
+            {
+                MessageBox.Show(result);
+            }
+            ((Button)sender).Visible = false;
+        }
+
         private void btnRemove_Click(object sender, EventArgs e)
         {
             int element = (int)((Button)sender).Tag;
@@ -127,14 +151,14 @@ namespace YoutubePlaylists
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), lblPlaylistName.Text.Replace("/", "-") + ".csv");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playlist." + lblPlaylistName.Text.Replace("/", "-") + ".csv");
 
             using (var file = File.CreateText(path))
             {
                 foreach (var data in Videos)
                 {
-                    string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")}{data.PlaylistVideoId},{data.VideoId}";
-                    line += $",{Truncate(data.Title.Replace(",", " - "), 30)},{Truncate(data.Description.Replace(",", " - "), 40)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
+                    string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")},{data.PlaylistVideoId},{data.VideoId}";
+                    line += $",{Truncate(data.Title.Replace(",", " - "), 50)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", "").Replace("\r", ""), 50)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
                     file.WriteLine(line);
                 }
             }

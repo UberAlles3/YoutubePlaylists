@@ -38,6 +38,7 @@ namespace YoutubePlaylists
             this.label2 = new System.Windows.Forms.Label();
             this.lblPlaylistName = new System.Windows.Forms.Label();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnMerge = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -79,23 +80,23 @@ namespace YoutubePlaylists
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Location = new System.Drawing.Point(354, 78);
+            this.panel2.Location = new System.Drawing.Point(354, 51);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(530, 486);
+            this.panel2.Size = new System.Drawing.Size(530, 513);
             this.panel2.TabIndex = 1;
             // 
             // txtDeletedVideos
             // 
-            this.txtDeletedVideos.Location = new System.Drawing.Point(910, 95);
+            this.txtDeletedVideos.Location = new System.Drawing.Point(910, 219);
             this.txtDeletedVideos.Multiline = true;
             this.txtDeletedVideos.Name = "txtDeletedVideos";
-            this.txtDeletedVideos.Size = new System.Drawing.Size(162, 383);
+            this.txtDeletedVideos.Size = new System.Drawing.Size(162, 345);
             this.txtDeletedVideos.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(910, 76);
+            this.label2.Location = new System.Drawing.Point(937, 201);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 15);
             this.label2.TabIndex = 5;
@@ -106,7 +107,7 @@ namespace YoutubePlaylists
             this.lblPlaylistName.AutoSize = true;
             this.lblPlaylistName.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblPlaylistName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPlaylistName.Location = new System.Drawing.Point(355, 48);
+            this.lblPlaylistName.Location = new System.Drawing.Point(354, 19);
             this.lblPlaylistName.Name = "lblPlaylistName";
             this.lblPlaylistName.Size = new System.Drawing.Size(121, 21);
             this.lblPlaylistName.TabIndex = 6;
@@ -114,7 +115,7 @@ namespace YoutubePlaylists
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(539, 41);
+            this.btnExport.Location = new System.Drawing.Point(802, 18);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(82, 27);
             this.btnExport.TabIndex = 7;
@@ -122,11 +123,21 @@ namespace YoutubePlaylists
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // btnMerge
+            // 
+            this.btnMerge.Location = new System.Drawing.Point(898, 19);
+            this.btnMerge.Name = "btnMerge";
+            this.btnMerge.Size = new System.Drawing.Size(174, 28);
+            this.btnMerge.TabIndex = 8;
+            this.btnMerge.Text = "Merge All Playlists Into One";
+            this.btnMerge.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 626);
+            this.Controls.Add(this.btnMerge);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblPlaylistName);
             this.Controls.Add(this.label2);
@@ -155,6 +166,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPlaylistName;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnMerge;
     }
 }
 
