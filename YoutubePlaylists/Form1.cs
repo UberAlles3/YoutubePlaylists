@@ -50,7 +50,7 @@ namespace YoutubePlaylists
             foreach (ChannelOutput.Playlist item in Playlists)
             {
                 checkboxlList.ElementAt(i).CheckedChanged += new EventHandler(chkboxPlaylist_CheckedChanged);
-                labelList.ElementAt(i).Text = item.Title + $"  ({item.ItemCount})";
+                labelList.ElementAt(i).Text = item.Title.Replace("/", " - ").Replace(",", " - ") + $"  ({item.ItemCount})";
                 i++;
             }
         }
@@ -60,7 +60,7 @@ namespace YoutubePlaylists
             if (((CheckBox)sender).Checked == true)
             {
                 int element = (int)((CheckBox)sender).Tag;
-                lblPlaylistName.Text = Playlists.ElementAt(element).Title;
+                lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", " - ").Replace(",", " - ");
                 _playlistId = Playlists.ElementAt(element).PlaylistId;
 
                 // Get videos
@@ -117,18 +117,6 @@ namespace YoutubePlaylists
         {
             int element = (int)((Button)sender).Tag;
             string playlistVideoId = Videos.ElementAt(element).PlaylistVideoId;
-
-            var result = _youtube.RemoveItemFromPlaylist(playlistVideoId);
-
-            if (result.Contains("Playlist item not found."))
-            {
-                MessageBox.Show("Playlist item not found.");
-            }
-            else if (result.Contains("Errors"))
-            {
-                MessageBox.Show(result);
-            }
-            ((Button)sender).Visible = false;
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -158,11 +146,36 @@ namespace YoutubePlaylists
                 foreach (var data in Videos)
                 {
                     string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")},{data.PlaylistVideoId},{data.VideoId}";
-                    line += $",{Truncate(data.Title.Replace(",", " - "), 50)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", "").Replace("\r", ""), 50)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
+                    line += $",{Truncate(data.Title.Replace(",", " - "), 50)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", "").Replace("\r", "").Replace("\"", "("), 50)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
                     file.WriteLine(line);
                 }
             }
         }
+
+        private void btnMerge_Click(object sender, EventArgs e)
+        {
+            const int chunkSize = 2 * 1024; // 2KB
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            string[] inputFiles = Directory.GetFiles(path, "Playlist.*.csv");
+
+            using (var output = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Playlists.AllPlaylists.csv")))
+            {
+                foreach (var file in inputFiles)
+                {
+                    using (var input = File.OpenRead(file))
+                    {
+                        var buffer = new byte[chunkSize];
+                        int bytesRead;
+                        while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            output.Write(buffer, 0, bytesRead);
+                        }
+                    }
+                }
+            }
+        }
+
         public string Truncate(string value, int maxLength)
         {
             if (string.IsNullOrEmpty(value)) return value;

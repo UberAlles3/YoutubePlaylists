@@ -131,6 +131,7 @@ namespace YoutubePlaylists
             this.btnMerge.TabIndex = 8;
             this.btnMerge.Text = "Merge All Playlists Into One";
             this.btnMerge.UseVisualStyleBackColor = true;
+            this.btnMerge.Click += new System.EventHandler(this.btnMerge_Click);
             // 
             // Form1
             // 
