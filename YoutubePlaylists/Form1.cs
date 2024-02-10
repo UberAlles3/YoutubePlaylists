@@ -186,7 +186,7 @@ namespace YoutubePlaylists
                     string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")},{data.PlaylistVideoId},{data.VideoId}";
                     line += $",{Truncate(data.Title.Replace(",", " - "), 60)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", " ").Replace("\r", " ").Replace("\"", "*"), 100)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
                     
-                    line = Regex.Replace(line, @"[^\u0000-\u007F]+", " ");
+                    line = Regex.Replace(line, @"[^\u0000-\u007F]+", " "); // get rid of funky characters
 
                     file.WriteLine(line);
                 }
@@ -227,9 +227,10 @@ namespace YoutubePlaylists
                 return;
             }
 
-            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(Path.Combine(path, "Playlists.AllPlaylists.csv"));
+            lblPlaylistName.Text = "Search results for: " + txtSearch.Text.Trim();
 
-            List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower()) || x.Description.Contains(txtSearch.Text.ToLower())).ToList();
+            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(Path.Combine(path, "Playlists.AllPlaylists.csv"));
+            List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower()) || x.Description.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
 
             Videos.Clear();
             foreach(YoutubeVideo item in foundVideos)
