@@ -39,6 +39,7 @@ namespace YoutubePlaylists
             this.lblPlaylistName = new System.Windows.Forms.Label();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnMerge = new System.Windows.Forms.Button();
+            this.btnFind = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -90,6 +91,7 @@ namespace YoutubePlaylists
             this.txtDeletedVideos.Location = new System.Drawing.Point(910, 219);
             this.txtDeletedVideos.Multiline = true;
             this.txtDeletedVideos.Name = "txtDeletedVideos";
+            this.txtDeletedVideos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDeletedVideos.Size = new System.Drawing.Size(162, 345);
             this.txtDeletedVideos.TabIndex = 4;
             // 
@@ -133,11 +135,22 @@ namespace YoutubePlaylists
             this.btnMerge.UseVisualStyleBackColor = true;
             this.btnMerge.Click += new System.EventHandler(this.btnMerge_Click);
             // 
+            // btnFind
+            // 
+            this.btnFind.Location = new System.Drawing.Point(898, 54);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(174, 29);
+            this.btnFind.TabIndex = 9;
+            this.btnFind.Text = "Find in Playlists";
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 626);
+            this.Controls.Add(this.btnFind);
             this.Controls.Add(this.btnMerge);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblPlaylistName);
@@ -168,6 +181,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Label lblPlaylistName;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnMerge;
+        private System.Windows.Forms.Button btnFind;
     }
 }
 

@@ -25,7 +25,7 @@ namespace YoutubePlaylists
 
         Youtube _youtube = new Youtube();
         List<ChannelOutput.Playlist> Playlists;
-        List<PlaylistOutput.Videos> Videos;
+        List<PlaylistOutput.Videos> Videos = new List<PlaylistOutput.Videos>();
 
         public Form1()
         {
@@ -67,49 +67,80 @@ namespace YoutubePlaylists
                 string playlistId = Playlists.ElementAt(element).PlaylistId;
                 Videos = _youtube.GetVideosByPlaylistId(playlistId);
 
-                panel2.Controls.Clear();
-                txtDeletedVideos.Text = "";
-                List<PictureBox> pictureList = DynamicControls.CreateDynamicControls<PictureBox>(panel2, "picVideo", Videos.Count, 80, 0, 12, 10, 60, 100);
-                List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", Videos.Count, 80, 0, 12, 120, 20, 360);
-                List<Label> labelDescList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoDesc", Videos.Count, 80, 0, 32, 120, 16, 360);
-                List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", Videos.Count, 80, 0, 52, 120, 20, 160);
-                List<Button> btnGetInfoList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnGetInfo", Videos.Count, 80, 0, 48, 350, 24, 80);
-                List<Button> btnRemoveList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnRemove", Videos.Count, 80, 0, 48, 440, 24, 60);
+                DisplayVideos(Videos);
+            }
+        }
 
-                int i = 0;
-                foreach (PlaylistOutput.Videos item in Videos)
+        private void DisplayVideos(List<PlaylistOutput.Videos> videos)
+        {
+            panel2.Controls.Clear();
+            txtDeletedVideos.Text = "";
+            List<PictureBox> pictureList = DynamicControls.CreateDynamicControls<PictureBox>(panel2, "picVideo", videos.Count, 80, 0, 12, 10, 60, 100);
+            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", videos.Count, 80, 0, 12, 120, 20, 360);
+            List<Label> labelDescList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoDesc", videos.Count, 80, 0, 32, 120, 16, 360);
+            List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", videos.Count, 80, 0, 52, 120, 20, 160);
+            List<Button> btnGetInfoList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnGetInfo", videos.Count, 80, 0, 48, 350, 24, 80);
+            List<Button> btnRemoveList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnRemove", videos.Count, 80, 0, 48, 440, 24, 60);
+
+            int i = 0;
+            foreach (PlaylistOutput.Videos item in videos)
+            {
+                string description = item.Description;
+                string title = item.Title;
+
+                if (item.Description.Contains("video is unavailabel") || item.Description.Contains("video is private") || item.Title.Contains("Deleted video"))
                 {
-                    string description = item.Description;
-                    string title = item.Title;
-
-                    if (item.Description.Contains("video is unavailabel") || item.Description.Contains("video is private") || item.Title.Contains("Deleted video"))
-                    {
-                        txtDeletedVideos.Text += item.VideoId + Environment.NewLine;
-                        labelList.ElementAt(i).Text = item.Title;
-                        labelDescList.ElementAt(i).Text = item.Description;
-                        //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 7.0F, FontStyle.Regular);
-                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
-                        btnGetInfoList.ElementAt(i).Text = "Remove";
-                        //btnRemoveList.ElementAt(i).Visible = true;
-                        btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
-                    }
-                    else
-                    {
-                        pictureList.ElementAt(i).SizeMode = PictureBoxSizeMode.CenterImage;
-                        pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
-                        labelList.ElementAt(i).Text = item.Title;
-                        labelDescList.ElementAt(i).Text = item.Description;
-                        //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 6.0F, FontStyle.Regular);
-                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
-                        btnGetInfoList.ElementAt(i).Text = "Get Info";
-                        //btnRemoveList.ElementAt(i).Visible = true;
-                        btnGetInfoList.ElementAt(i).Click += new EventHandler(btnGetInfo_Click);
-                        btnRemoveList.ElementAt(i).Text = "Remove";
-                        //btnRemoveList.ElementAt(i).Visible = true;
-                        btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
-                    }
-                    i++;
+                    txtDeletedVideos.Text += item.VideoId + Environment.NewLine;
+                    labelList.ElementAt(i).Text = item.Title;
+                    labelDescList.ElementAt(i).Text = item.Description;
+                    //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 7.0F, FontStyle.Regular);
+                    labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                    btnGetInfoList.ElementAt(i).Text = "Remove";
+                    //btnRemoveList.ElementAt(i).Visible = true;
+                    btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                 }
+                else
+                {
+                    pictureList.ElementAt(i).SizeMode = PictureBoxSizeMode.CenterImage;
+                    pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
+                    pictureList.ElementAt(i).MouseEnter += new EventHandler(pictureList_MouseEnter);
+                    pictureList.ElementAt(i).MouseLeave += new EventHandler(pictureList_MouseLeave);
+                    pictureList.ElementAt(i).Click += new EventHandler(pictureList_Click);
+                    labelList.ElementAt(i).Text = item.Title;
+                    labelDescList.ElementAt(i).Text = item.Description;
+                    //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 6.0F, FontStyle.Regular);
+                    labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                    btnGetInfoList.ElementAt(i).Text = "Get Info";
+                    //btnRemoveList.ElementAt(i).Visible = true;
+                    btnGetInfoList.ElementAt(i).Click += new EventHandler(btnGetInfo_Click);
+                    btnRemoveList.ElementAt(i).Text = "Remove";
+                    //btnRemoveList.ElementAt(i).Visible = true;
+                    btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
+                }
+                i++;
+            }
+        }
+
+        private void pictureList_MouseEnter(object sender, EventArgs e)
+        {
+            ((PictureBox)sender).Cursor = Cursors.Hand;
+        }
+        private void pictureList_MouseLeave(object sender, EventArgs e)
+        {
+            ((PictureBox)sender).Cursor = Cursors.Default;
+        }
+        private void pictureList_Click(object sender, EventArgs e)
+        {
+            int element = (int)((PictureBox)sender).Tag;
+            string VideoId = Videos.ElementAt(element).VideoId;
+
+            try
+            {
+                System.Diagnostics.Process.Start("cmd", "/c start https://www.youtube.com/watch?v=" + VideoId);
+            }
+            catch (Win32Exception ex)
+            {
+               MessageBox.Show(ex.Message);
             }
         }
 
@@ -118,6 +149,8 @@ namespace YoutubePlaylists
             int element = (int)((Button)sender).Tag;
             string playlistVideoId = Videos.ElementAt(element).PlaylistVideoId;
         }
+
+
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
@@ -159,7 +192,7 @@ namespace YoutubePlaylists
 
             string[] inputFiles = Directory.GetFiles(path, "Playlist.*.csv");
 
-            using (var output = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Playlists.AllPlaylists.csv")))
+            using (var output = File.Create(Path.Combine(path, "Playlists.AllPlaylists.csv")))
             {
                 foreach (var file in inputFiles)
                 {
@@ -174,6 +207,42 @@ namespace YoutubePlaylists
                     }
                 }
             }
+        }
+
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(Path.Combine(path, "Playlists.AllPlaylists.csv"));
+
+            List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains("Flock".ToLower()) || x.Description.Contains("Roxy")).ToList();
+
+            Videos.Clear();
+            foreach(YoutubeVideo item in foundVideos)
+            {
+                List<Thumbnails> t = new List<Thumbnails>();
+                t.Add(new Thumbnails() { ImageUri = new Uri(item.ImageUri) });
+
+                Videos.Add(new PlaylistOutput.Videos
+                {
+                    PlaylistVideoId = item.PlaylistVideoId,
+                    VideoId = item.VideoId,
+                    Title = item.Title,
+                    Description = item.Description,
+                    ThumbnailsData = t
+                });
+            }
+
+            DisplayVideos(Videos);
+        }
+
+        public List<Thumbnails> AddOne(string imageUri)
+        {
+            List<Thumbnails> thumbnails = new List<Thumbnails>();
+            Uri uri = new Uri(imageUri);
+            thumbnails.Add(new Thumbnails() { ImageUri = uri });
+
+            return thumbnails;
         }
 
         public string Truncate(string value, int maxLength)
