@@ -44,32 +44,32 @@ namespace YoutubePlaylists
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
 
             panel1.Controls.Clear();
-            List<CheckBox> checkboxlList = DynamicControls.CreateDynamicControls<CheckBox>(panel1, "chkboxPlaylist", Playlists.Count, 20, 0, 10, 10, 20, 20);
-            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel1, "lblPlaylist", Playlists.Count, 20, 0, 12, 30, 20, 200);
+            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel1, "lblPlaylist", Playlists.Count, 20, 0, 12, 8, 20, 200);
 
             int i = 0;
             foreach (ChannelOutput.Playlist item in Playlists)
             {
-                checkboxlList.ElementAt(i).CheckedChanged += new EventHandler(chkboxPlaylist_CheckedChanged);
+                //checkboxlList.ElementAt(i).CheckedChanged += new EventHandler(chkboxPlaylist_CheckedChanged);
                 labelList.ElementAt(i).Text = item.Title.Replace("/", " - ").Replace(",", " - ") + $"  ({item.ItemCount})";
+                labelList.ElementAt(i).TextAlign = ContentAlignment.MiddleLeft;
+                labelList.ElementAt(i).MouseEnter += new EventHandler(labelList_MouseEnter);
+                labelList.ElementAt(i).MouseLeave += new EventHandler(labelList_MouseLeave);
+                labelList.ElementAt(i).Click += new EventHandler(labelList_Click);
                 i++;
             }
         }
 
-        private void chkboxPlaylist_CheckedChanged(object sender, EventArgs e)
+        private void labelList_Click(object sender, EventArgs e)
         {
-            if (((CheckBox)sender).Checked == true)
-            {
-                int element = (int)((CheckBox)sender).Tag;
-                lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", " - ").Replace(",", " - ");
-                _playlistId = Playlists.ElementAt(element).PlaylistId;
+            int element = (int)((Label)sender).Tag;
+            lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", " - ").Replace(",", " - ");
+            _playlistId = Playlists.ElementAt(element).PlaylistId;
 
-                // Get videos
-                string playlistId = Playlists.ElementAt(element).PlaylistId;
-                Videos = _youtube.GetVideosByPlaylistId(playlistId);
+            // Get videos
+            string playlistId = Playlists.ElementAt(element).PlaylistId;
+            Videos = _youtube.GetVideosByPlaylistId(playlistId);
 
-                DisplayVideos(Videos);
-            }
+            DisplayVideos(Videos);
         }
 
         private void DisplayVideos(List<PlaylistOutput.Videos> videos)
@@ -77,7 +77,7 @@ namespace YoutubePlaylists
             panel2.Controls.Clear();
             txtDeletedVideos.Text = "";
             List<PictureBox> pictureList = DynamicControls.CreateDynamicControls<PictureBox>(panel2, "picVideo", videos.Count, 80, 0, 12, 10, 60, 100);
-            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", videos.Count, 80, 0, 12, 120, 20, 360);
+            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", videos.Count, 80, 0, 12, 120, 18, 360);
             List<Label> labelDescList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoDesc", videos.Count, 80, 0, 32, 120, 16, 360);
             List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", videos.Count, 80, 0, 52, 120, 20, 160);
             List<Button> btnGetInfoList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnGetInfo", videos.Count, 80, 0, 48, 350, 24, 80);
@@ -126,6 +126,16 @@ namespace YoutubePlaylists
             }
         }
 
+        private void labelList_MouseEnter(object sender, EventArgs e)
+        {
+            ((Label)sender).BackColor = Color.LightBlue;
+            ((Label)sender).Cursor = Cursors.Hand;
+        }
+        private void labelList_MouseLeave(object sender, EventArgs e)
+        {
+            ((Label)sender).BackColor = panel1.BackColor;
+            ((Label)sender).Cursor = Cursors.Default;
+        }
         private void pictureList_MouseEnter(object sender, EventArgs e)
         {
             ((PictureBox)sender).Cursor = Cursors.Hand;
