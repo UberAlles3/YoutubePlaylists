@@ -40,6 +40,7 @@ namespace YoutubePlaylists
             this.btnExport = new System.Windows.Forms.Button();
             this.btnMerge = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // panel1
@@ -137,7 +138,7 @@ namespace YoutubePlaylists
             // 
             // btnFind
             // 
-            this.btnFind.Location = new System.Drawing.Point(898, 54);
+            this.btnFind.Location = new System.Drawing.Point(898, 78);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(174, 29);
             this.btnFind.TabIndex = 9;
@@ -145,11 +146,19 @@ namespace YoutubePlaylists
             this.btnFind.UseVisualStyleBackColor = true;
             this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(898, 114);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(174, 23);
+            this.txtSearch.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 626);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.btnFind);
             this.Controls.Add(this.btnMerge);
             this.Controls.Add(this.btnExport);
@@ -182,6 +191,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnMerge;
         private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }
 

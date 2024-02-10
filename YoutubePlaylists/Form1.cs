@@ -14,6 +14,7 @@ using YoutubeSharpApi.Models;
 using Google.Apis.YouTube.v3;
 using Google.Apis.Services;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace YoutubePlaylists
 {
@@ -109,7 +110,11 @@ namespace YoutubePlaylists
                     labelList.ElementAt(i).Text = item.Title;
                     labelDescList.ElementAt(i).Text = item.Description;
                     //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 6.0F, FontStyle.Regular);
-                    labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                    if(string.IsNullOrEmpty(item.PlaylistTitle))
+                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                    else
+                        labelVideoIdList.ElementAt(i).Text = $"Playlist: {item.PlaylistTitle}";
+
                     btnGetInfoList.ElementAt(i).Text = "Get Info";
                     //btnRemoveList.ElementAt(i).Visible = true;
                     btnGetInfoList.ElementAt(i).Click += new EventHandler(btnGetInfo_Click);
@@ -179,7 +184,10 @@ namespace YoutubePlaylists
                 foreach (var data in Videos)
                 {
                     string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")},{data.PlaylistVideoId},{data.VideoId}";
-                    line += $",{Truncate(data.Title.Replace(",", " - "), 50)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", "").Replace("\r", "").Replace("\"", "("), 50)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
+                    line += $",{Truncate(data.Title.Replace(",", " - "), 60)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", " ").Replace("\r", " ").Replace("\"", "*"), 100)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
+                    
+                    line = Regex.Replace(line, @"[^\u0000-\u007F]+", " ");
+
                     file.WriteLine(line);
                 }
             }
@@ -213,9 +221,15 @@ namespace YoutubePlaylists
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
+            if(txtSearch.Text.Trim().Length < 3)
+            {
+                MessageBox.Show("Enter a search term with at least 2 characters.");
+                return;
+            }
+
             List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(Path.Combine(path, "Playlists.AllPlaylists.csv"));
 
-            List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains("Flock".ToLower()) || x.Description.Contains("Roxy")).ToList();
+            List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower()) || x.Description.Contains(txtSearch.Text.ToLower())).ToList();
 
             Videos.Clear();
             foreach(YoutubeVideo item in foundVideos)
@@ -226,6 +240,7 @@ namespace YoutubePlaylists
                 Videos.Add(new PlaylistOutput.Videos
                 {
                     PlaylistVideoId = item.PlaylistVideoId,
+                    PlaylistTitle = item.PlaylistTitle,
                     VideoId = item.VideoId,
                     Title = item.Title,
                     Description = item.Description,
