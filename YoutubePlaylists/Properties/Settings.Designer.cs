@@ -25,7 +25,7 @@ namespace YoutubePlaylists.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ExportsFolder {
             get {
                 return ((string)(this["ExportsFolder"]));

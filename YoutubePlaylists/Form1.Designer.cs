@@ -203,19 +203,20 @@ namespace YoutubePlaylists
             // exportCurrentToolStripMenuItem
             // 
             this.exportCurrentToolStripMenuItem.Name = "exportCurrentToolStripMenuItem";
-            this.exportCurrentToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.exportCurrentToolStripMenuItem.Text = "Export &Current";
+            this.exportCurrentToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.exportCurrentToolStripMenuItem.Text = "Export &Current Playlist";
+            this.exportCurrentToolStripMenuItem.Click += new System.EventHandler(this.exportCurrentToolStripMenuItem_Click);
             // 
             // exportAllToolStripMenuItem
             // 
             this.exportAllToolStripMenuItem.Name = "exportAllToolStripMenuItem";
-            this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.exportAllToolStripMenuItem.Text = "Export &All";
+            this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.exportAllToolStripMenuItem.Text = "Export &All Playlists";
             // 
             // mergeAllExportsToolStripMenuItem
             // 
             this.mergeAllExportsToolStripMenuItem.Name = "mergeAllExportsToolStripMenuItem";
-            this.mergeAllExportsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.mergeAllExportsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.mergeAllExportsToolStripMenuItem.Text = "&Merge All Exports";
             // 
             // settingsToolStripMenuItem

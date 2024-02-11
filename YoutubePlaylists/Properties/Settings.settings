@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ExportsFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

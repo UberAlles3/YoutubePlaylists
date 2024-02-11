@@ -187,8 +187,8 @@ namespace YoutubePlaylists
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playlist." + lblPlaylistName.Text.Replace("/", "-") + ".csv");
-
+            string path = Path.Combine(Settings.ExportPath, "Playlist." + lblPlaylistName.Text.Replace("/", "-") + ".csv");
+        
             using (var file = File.CreateText(path))
             {
                 foreach (var data in Videos)
@@ -281,6 +281,11 @@ namespace YoutubePlaylists
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
