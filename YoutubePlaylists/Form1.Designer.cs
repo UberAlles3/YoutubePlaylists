@@ -42,13 +42,22 @@ namespace YoutubePlaylists
             this.btnMerge = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeAllExportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(12, 78);
+            this.panel1.Location = new System.Drawing.Point(12, 95);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(273, 486);
             this.panel1.TabIndex = 0;
@@ -56,7 +65,7 @@ namespace YoutubePlaylists
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 19);
+            this.label1.Location = new System.Drawing.Point(13, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 15);
             this.label1.TabIndex = 1;
@@ -64,14 +73,14 @@ namespace YoutubePlaylists
             // 
             // txtChannelId
             // 
-            this.txtChannelId.Location = new System.Drawing.Point(87, 12);
+            this.txtChannelId.Location = new System.Drawing.Point(87, 29);
             this.txtChannelId.Name = "txtChannelId";
             this.txtChannelId.Size = new System.Drawing.Size(198, 23);
             this.txtChannelId.TabIndex = 2;
             // 
             // btnGetPlaylists
             // 
-            this.btnGetPlaylists.Location = new System.Drawing.Point(87, 41);
+            this.btnGetPlaylists.Location = new System.Drawing.Point(87, 58);
             this.btnGetPlaylists.Name = "btnGetPlaylists";
             this.btnGetPlaylists.Size = new System.Drawing.Size(198, 23);
             this.btnGetPlaylists.TabIndex = 3;
@@ -83,14 +92,14 @@ namespace YoutubePlaylists
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Location = new System.Drawing.Point(319, 51);
+            this.panel2.Location = new System.Drawing.Point(319, 68);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(543, 513);
             this.panel2.TabIndex = 1;
             // 
             // txtDeletedVideos
             // 
-            this.txtDeletedVideos.Location = new System.Drawing.Point(891, 219);
+            this.txtDeletedVideos.Location = new System.Drawing.Point(891, 236);
             this.txtDeletedVideos.Multiline = true;
             this.txtDeletedVideos.Name = "txtDeletedVideos";
             this.txtDeletedVideos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -100,7 +109,7 @@ namespace YoutubePlaylists
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(918, 201);
+            this.label2.Location = new System.Drawing.Point(918, 218);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 15);
             this.label2.TabIndex = 5;
@@ -111,7 +120,7 @@ namespace YoutubePlaylists
             this.lblPlaylistName.AutoSize = true;
             this.lblPlaylistName.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblPlaylistName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPlaylistName.Location = new System.Drawing.Point(319, 19);
+            this.lblPlaylistName.Location = new System.Drawing.Point(319, 36);
             this.lblPlaylistName.Name = "lblPlaylistName";
             this.lblPlaylistName.Size = new System.Drawing.Size(121, 21);
             this.lblPlaylistName.TabIndex = 6;
@@ -119,7 +128,7 @@ namespace YoutubePlaylists
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(780, 18);
+            this.btnExport.Location = new System.Drawing.Point(780, 35);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(82, 27);
             this.btnExport.TabIndex = 7;
@@ -129,7 +138,7 @@ namespace YoutubePlaylists
             // 
             // btnMerge
             // 
-            this.btnMerge.Location = new System.Drawing.Point(879, 19);
+            this.btnMerge.Location = new System.Drawing.Point(879, 36);
             this.btnMerge.Name = "btnMerge";
             this.btnMerge.Size = new System.Drawing.Size(174, 28);
             this.btnMerge.TabIndex = 8;
@@ -139,7 +148,7 @@ namespace YoutubePlaylists
             // 
             // btnFind
             // 
-            this.btnFind.Location = new System.Drawing.Point(879, 78);
+            this.btnFind.Location = new System.Drawing.Point(879, 95);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(174, 29);
             this.btnFind.TabIndex = 9;
@@ -149,10 +158,71 @@ namespace YoutubePlaylists
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(879, 114);
+            this.txtSearch.Location = new System.Drawing.Point(879, 131);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(174, 23);
             this.txtSearch.TabIndex = 10;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem,
+            this.exportingToolStripMenuItem,
+            this.settingsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1079, 24);
+            this.menuStrip1.TabIndex = 11;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem1});
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.exitToolStripMenuItem.Text = "&File";
+            // 
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem1.Text = "&Exit        Alt+F4";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
+            // 
+            // exportingToolStripMenuItem
+            // 
+            this.exportingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportCurrentToolStripMenuItem,
+            this.exportAllToolStripMenuItem,
+            this.mergeAllExportsToolStripMenuItem});
+            this.exportingToolStripMenuItem.Name = "exportingToolStripMenuItem";
+            this.exportingToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportingToolStripMenuItem.Text = "&Export";
+            // 
+            // exportCurrentToolStripMenuItem
+            // 
+            this.exportCurrentToolStripMenuItem.Name = "exportCurrentToolStripMenuItem";
+            this.exportCurrentToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.exportCurrentToolStripMenuItem.Text = "Export &Current";
+            // 
+            // exportAllToolStripMenuItem
+            // 
+            this.exportAllToolStripMenuItem.Name = "exportAllToolStripMenuItem";
+            this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.exportAllToolStripMenuItem.Text = "Export &All";
+            // 
+            // mergeAllExportsToolStripMenuItem
+            // 
+            this.mergeAllExportsToolStripMenuItem.Name = "mergeAllExportsToolStripMenuItem";
+            this.mergeAllExportsToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.mergeAllExportsToolStripMenuItem.Text = "&Merge All Exports";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "&Settings";
             // 
             // Form1
             // 
@@ -171,10 +241,14 @@ namespace YoutubePlaylists
             this.Controls.Add(this.txtChannelId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Youtube Playlist Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,6 +268,14 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Button btnMerge;
         private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportCurrentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mergeAllExportsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
     }
 }
 
