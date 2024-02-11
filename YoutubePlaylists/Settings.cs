@@ -32,7 +32,12 @@ namespace YoutubePlaylists
 
                 return _exportPath; 
             }
-            set { _exportPath = value; }
+            set 
+            {
+                _exportPath = value;
+                Properties.Settings.Default.ExportsFolder = _exportPath;
+                Properties.Settings.Default.Save();
+            }
         }
 
 
