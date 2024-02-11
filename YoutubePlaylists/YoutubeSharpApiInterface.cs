@@ -10,7 +10,7 @@ using YoutubeSharpApi.Models;
 
 namespace YoutubePlaylists
 {
-    public class Youtube
+    public class YoutubeSharpApiInterface
     {
         private static string _apiKey = "AIzaSyA1B4A-V8Dp3lFYnSQjJEoABvpPQyDraRw"; // https://developers.google.com/youtube/v3/getting-started
         //private List<ChannelOutput.Playlist> Playlists = new List<ChannelOutput.Playlist>();

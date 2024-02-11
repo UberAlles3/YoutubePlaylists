@@ -11,10 +11,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using YoutubeSharpApi;
 using YoutubeSharpApi.Models;
-using Google.Apis.YouTube.v3;
-using Google.Apis.Services;
 using System.IO;
 using System.Text.RegularExpressions;
+using GD.Extensions;
 
 namespace YoutubePlaylists
 {
@@ -24,7 +23,7 @@ namespace YoutubePlaylists
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
         private static string _playlistId = "";
 
-        Youtube _youtube = new Youtube();
+        YoutubeSharpApiInterface _youtube = new YoutubeSharpApiInterface();
         List<ChannelOutput.Playlist> Playlists;
         List<PlaylistOutput.Videos> Videos = new List<PlaylistOutput.Videos>();
 
@@ -44,7 +43,7 @@ namespace YoutubePlaylists
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
 
             panel1.Controls.Clear();
-            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel1, "lblPlaylist", Playlists.Count, 20, 0, 12, 8, 20, 200);
+            List<Label> labelList = panel1.CreateDynamicControls<Label>("lblPlaylist", Playlists.Count, 20, 0, 12, 8, 20, 200);
 
             int i = 0;
             foreach (ChannelOutput.Playlist item in Playlists)
@@ -76,12 +75,12 @@ namespace YoutubePlaylists
         {
             panel2.Controls.Clear();
             txtDeletedVideos.Text = "";
-            List<PictureBox> pictureList = DynamicControls.CreateDynamicControls<PictureBox>(panel2, "picVideo", videos.Count, 80, 0, 12, 10, 60, 100);
-            List<Label> labelList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideo", videos.Count, 80, 0, 12, 120, 18, 360);
-            List<Label> labelDescList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoDesc", videos.Count, 80, 0, 32, 120, 16, 360);
-            List<Label> labelVideoIdList = DynamicControls.CreateDynamicControls<Label>(panel2, "lblVideoID", videos.Count, 80, 0, 52, 120, 20, 160);
-            List<Button> btnGetInfoList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnGetInfo", videos.Count, 80, 0, 48, 350, 24, 80);
-            List<Button> btnRemoveList = DynamicControls.CreateDynamicControls<Button>(panel2, "btnRemove", videos.Count, 80, 0, 48, 440, 24, 60);
+            List<PictureBox> pictureList = panel2.CreateDynamicControls<PictureBox>("picVideo", videos.Count, 80, 0, 12, 10, 60, 100);
+            List<Label> labelList = panel2.CreateDynamicControls<Label>("lblVideo", videos.Count, 80, 0, 12, 120, 18, 360);
+            List<Label> labelDescList = panel2.CreateDynamicControls<Label>("lblVideoDesc", videos.Count, 80, 0, 32, 120, 16, 360);
+            List<Label> labelVideoIdList = panel2.CreateDynamicControls<Label>("lblVideoID", videos.Count, 80, 0, 52, 120, 20, 160);
+            List<Button> btnGetInfoList = panel2.CreateDynamicControls<Button>("btnGetInfo", videos.Count, 80, 0, 48, 350, 24, 80);
+            List<Button> btnRemoveList = panel2.CreateDynamicControls<Button>("btnRemove", videos.Count, 80, 0, 48, 440, 24, 60);
 
             int i = 0;
             foreach (PlaylistOutput.Videos item in videos)
@@ -185,24 +184,6 @@ namespace YoutubePlaylists
             ((Button)sender).Visible = false;
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            string path = Path.Combine(Settings.ExportPath, "Playlist." + lblPlaylistName.Text.Replace("/", "-") + ".csv");
-        
-            using (var file = File.CreateText(path))
-            {
-                foreach (var data in Videos)
-                {
-                    string line = $"{_playlistId},{lblPlaylistName.Text.Replace("/", " - ")},{data.PlaylistVideoId},{data.VideoId}";
-                    line += $",{Truncate(data.Title.Replace(",", " - "), 60)},{Truncate(data.Description.Replace(",", " - ").Replace("\n", " ").Replace("\r", " ").Replace("\"", "*"), 100)},{((data.ThumbnailsData == null) ? "" : data.ThumbnailsData[0].ImageUri.ToString())}";
-                    
-                    line = Regex.Replace(line, @"[^\u0000-\u007F]+", " "); // get rid of funky characters
-
-                    file.WriteLine(line);
-                }
-            }
-        }
-
         private void btnMerge_Click(object sender, EventArgs e)
         {
             const int chunkSize = 2 * 1024; // 2KB
@@ -285,7 +266,7 @@ namespace YoutubePlaylists
 
         private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+           ApplicationYoutube.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
         }
     }
 }

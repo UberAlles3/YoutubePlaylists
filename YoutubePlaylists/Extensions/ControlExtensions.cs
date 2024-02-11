@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace YoutubePlaylists
+namespace GD.Extensions
 {
-    public class DynamicControls
+    public static class ControlExtensions
     {
-        public static List<T> CreateDynamicControls<T>(Control containerControl, string name, int number, int verticleSpacing, int horizontalSpacing, int controlTop, int controlLeft, int controlHeight, int controlWidth) where T : Control, new()
+        public static List<T> CreateDynamicControls<T>(this Control containerControl, string name, int number, int verticleSpacing, int horizontalSpacing, int controlTop, int controlLeft, int controlHeight, int controlWidth) where T : Control, new()
         {
             List<T> dynamicControls = new List<T>();
 

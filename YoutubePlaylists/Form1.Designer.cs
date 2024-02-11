@@ -38,7 +38,6 @@ namespace YoutubePlaylists
             this.txtDeletedVideos = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblPlaylistName = new System.Windows.Forms.Label();
-            this.btnExport = new System.Windows.Forms.Button();
             this.btnMerge = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
@@ -126,16 +125,6 @@ namespace YoutubePlaylists
             this.lblPlaylistName.TabIndex = 6;
             this.lblPlaylistName.Text = "lblPlaylistName";
             // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(780, 35);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(82, 27);
-            this.btnExport.TabIndex = 7;
-            this.btnExport.Text = "Export";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
             // btnMerge
             // 
             this.btnMerge.Location = new System.Drawing.Point(879, 36);
@@ -186,7 +175,7 @@ namespace YoutubePlaylists
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem1.Text = "&Exit        Alt+F4";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -233,7 +222,6 @@ namespace YoutubePlaylists
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.btnFind);
             this.Controls.Add(this.btnMerge);
-            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblPlaylistName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDeletedVideos);
@@ -265,7 +253,6 @@ namespace YoutubePlaylists
         private System.Windows.Forms.TextBox txtDeletedVideos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPlaylistName;
-        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnMerge;
         private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.TextBox txtSearch;
