@@ -330,5 +330,11 @@ namespace YoutubePlaylists
 
             File.Copy(sourcePath, targetPath);
         }
+
+        private void exportOutputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm f = new SettingsForm();
+            f.ShowDialog();
+        }
     }
 }
