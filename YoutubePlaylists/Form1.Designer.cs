@@ -52,6 +52,8 @@ namespace YoutubePlaylists
             this.btnSearch = new System.Windows.Forms.Button();
             this.picSpinner = new System.Windows.Forms.PictureBox();
             this.picSpinner2 = new System.Windows.Forms.PictureBox();
+            this.lblTaskFeedback = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSpinner2)).BeginInit();
@@ -208,7 +210,7 @@ namespace YoutubePlaylists
             // openExportedFileToolStripMenuItem
             // 
             this.openExportedFileToolStripMenuItem.Name = "openExportedFileToolStripMenuItem";
-            this.openExportedFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openExportedFileToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.openExportedFileToolStripMenuItem.Text = "&Open Exported File";
             this.openExportedFileToolStripMenuItem.Click += new System.EventHandler(this.openExportedFileToolStripMenuItem_Click);
             // 
@@ -250,11 +252,35 @@ namespace YoutubePlaylists
             this.picSpinner2.TabIndex = 15;
             this.picSpinner2.TabStop = false;
             // 
+            // lblTaskFeedback
+            // 
+            this.lblTaskFeedback.AutoSize = true;
+            this.lblTaskFeedback.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTaskFeedback.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblTaskFeedback.Location = new System.Drawing.Point(350, 9);
+            this.lblTaskFeedback.Name = "lblTaskFeedback";
+            this.lblTaskFeedback.Size = new System.Drawing.Size(54, 21);
+            this.lblTaskFeedback.TabIndex = 16;
+            this.lblTaskFeedback.Text = "label3";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(806, 7);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 17;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // Form1
             // 
+            this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1085, 597);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.lblTaskFeedback);
             this.Controls.Add(this.picSpinner2);
             this.Controls.Add(this.picSpinner);
             this.Controls.Add(this.btnSearch);
@@ -306,6 +332,8 @@ namespace YoutubePlaylists
         private System.Windows.Forms.PictureBox picSpinner2;
         private System.Windows.Forms.ToolStripMenuItem exportOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openExportedFileToolStripMenuItem;
+        private System.Windows.Forms.Label lblTaskFeedback;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
 

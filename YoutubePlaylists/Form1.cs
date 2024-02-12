@@ -28,6 +28,7 @@ namespace YoutubePlaylists
         //private static string _playlistId = "PLd4S0e5MPnVi3fD3O0VKFLyUwbiNrsHRF"; // https://www.youtube.com/playlist?list=PLzByySESNL7GKiOXOs7ew5vEFBxuJvf0D
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
         private static string _playlistId = "";
+        private static bool _cancelTask = false;
 
         YoutubeSharpApiInterface _youtube = new YoutubeSharpApiInterface();
         List<ChannelOutput.Playlist> Playlists;
@@ -44,14 +45,18 @@ namespace YoutubePlaylists
             picSpinner.Visible = false;
             picSpinner2.Visible = false;
             lblPlaylistName.Text = "";
+            lblTaskFeedback.Text = "";
+            btnCancel.Visible = false;
+            exportAllToolStripMenuItem.Enabled = false;
         }
 
         // Form Display mode, wait cursor
         private void FormDisplayWaitForTask(WaitEnum waitEnum)
         {
-            this.Cursor = (waitEnum == WaitEnum.Show) ? Cursors.Default : Cursors.WaitCursor;
+            //this.Cursor = (waitEnum == WaitEnum.Show) ? Cursors.Default : Cursors.WaitCursor;
             picSpinner2.Visible = (waitEnum == WaitEnum.Hide);
             lblPlaylistName.Visible = (waitEnum == WaitEnum.Show);
+            lblTaskFeedback.Visible = (waitEnum == WaitEnum.Hide);
             panel1.Enabled = (waitEnum == WaitEnum.Show);
             Application.DoEvents();
         }
@@ -61,6 +66,7 @@ namespace YoutubePlaylists
         {
             picSpinner.Visible = true;
             btnGetPlaylists.Enabled = false;
+            exportAllToolStripMenuItem.Enabled = true;
 
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
 
@@ -224,6 +230,10 @@ namespace YoutubePlaylists
 
             DisplayVideos(Videos);
         }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            _cancelTask = true;
+        }
         #endregion
 
         #region ****************************** M E N U ************************************
@@ -240,9 +250,29 @@ namespace YoutubePlaylists
         }
         #endregion
 
-        private void exportAllToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void exportAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FormDisplayWaitForTask(WaitEnum.Hide);
+            txtSearch.Visible = false;
+            btnSearch.Visible = false;
+            btnCancel.Visible = true;
 
+            foreach (ChannelOutput.Playlist playlist in Playlists)
+            {
+                lblTaskFeedback.Text = $"Exporting {playlist.Title}...";
+                Videos = await _youtube.GetVideosByPlaylistId(playlist.PlaylistId);
+                ApplicationPlaylistExport.ExportPlaylist(Videos, _playlistId, playlist.Title);
+                if (_cancelTask) break;
+            }
+
+            lblTaskFeedback.Text = "";
+            lblPlaylistName.Text = "";
+            panel2.Controls.Clear();
+            FormDisplayWaitForTask(WaitEnum.Show);
+            txtSearch.Visible = true;
+            btnSearch.Visible = true;
+            btnCancel.Visible = false;
+            _cancelTask = false;
         }
 
         private void mergeAllExportsToolStripMenuItem_Click(object sender, EventArgs e)
