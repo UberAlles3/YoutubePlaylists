@@ -48,7 +48,11 @@ namespace YoutubePlaylists
             this.mergeAllExportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.picSpinner = new System.Windows.Forms.PictureBox();
+            this.picSpinner2 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSpinner2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -204,11 +208,35 @@ namespace YoutubePlaylists
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
+            // picSpinner
+            // 
+            this.picSpinner.BackColor = System.Drawing.Color.Transparent;
+            this.picSpinner.Image = ((System.Drawing.Image)(resources.GetObject("picSpinner.Image")));
+            this.picSpinner.Location = new System.Drawing.Point(50, 56);
+            this.picSpinner.Name = "picSpinner";
+            this.picSpinner.Size = new System.Drawing.Size(25, 25);
+            this.picSpinner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picSpinner.TabIndex = 14;
+            this.picSpinner.TabStop = false;
+            // 
+            // picSpinner2
+            // 
+            this.picSpinner2.BackColor = System.Drawing.Color.Transparent;
+            this.picSpinner2.Image = ((System.Drawing.Image)(resources.GetObject("picSpinner2.Image")));
+            this.picSpinner2.Location = new System.Drawing.Point(319, 5);
+            this.picSpinner2.Name = "picSpinner2";
+            this.picSpinner2.Size = new System.Drawing.Size(25, 25);
+            this.picSpinner2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picSpinner2.TabIndex = 15;
+            this.picSpinner2.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1085, 597);
+            this.Controls.Add(this.picSpinner2);
+            this.Controls.Add(this.picSpinner);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.lblPlaylistName);
@@ -227,6 +255,8 @@ namespace YoutubePlaylists
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSpinner2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,6 +282,8 @@ namespace YoutubePlaylists
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.PictureBox picSpinner;
+        private System.Windows.Forms.PictureBox picSpinner2;
     }
 }
 

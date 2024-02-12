@@ -35,12 +35,17 @@ namespace YoutubePlaylists
         private void Form1_Load(object sender, EventArgs e)
         {
             txtChannelId.Text = _channelId;
+            picSpinner.Visible = false;
+            picSpinner2.Visible = false;
             lblPlaylistName.Text = "";
         }
 
         #region ********************************** Playlists Panel **********************************
         private void btnGetPlaylists_Click(object sender, EventArgs e)
         {
+            picSpinner.Visible = true;
+            btnGetPlaylists.Enabled = false;
+
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
 
             panel1.Controls.Clear();
@@ -57,19 +62,30 @@ namespace YoutubePlaylists
                 labelList.ElementAt(i).Click += new EventHandler(labelList_Click);
                 i++;
             }
+            picSpinner.Visible = false;
+            btnGetPlaylists.Enabled = true;
         }
 
-        private void labelList_Click(object sender, EventArgs e)
+        private async void labelList_Click(object sender, EventArgs e)
         {
             int element = (int)((Label)sender).Tag;
             lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", " - ").Replace(",", " - ");
             _playlistId = Playlists.ElementAt(element).PlaylistId;
 
-            // Get videos
-            string playlistId = Playlists.ElementAt(element).PlaylistId;
-            Videos = _youtube.GetVideosByPlaylistId(playlistId);
+            picSpinner2.Visible = true;
+            lblPlaylistName.Visible = false;
+            panel1.Enabled = false;
+            Application.DoEvents();
 
+            /////////////////////////////// Get videos
+            string playlistId = Playlists.ElementAt(element).PlaylistId;
+            Videos = await _youtube.GetVideosByPlaylistId(playlistId);
             DisplayVideos(Videos);
+            //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+            picSpinner2.Visible = false;
+            lblPlaylistName.Visible = true;
+            panel1.Enabled = true;
         }
         #endregion
 
@@ -87,6 +103,7 @@ namespace YoutubePlaylists
             int i = 0;
             foreach (PlaylistOutput.Videos item in videos)
             {
+                Application.DoEvents();
                 string description = item.Description;
                 string title = item.Title;
 

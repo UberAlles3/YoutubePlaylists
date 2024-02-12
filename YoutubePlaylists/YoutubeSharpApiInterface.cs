@@ -39,7 +39,7 @@ namespace YoutubePlaylists
             return responseChannel.PlaylistData;
         }
 
-        public List<PlaylistOutput.Videos> GetVideosByPlaylistId(string playlistId, bool sortByTitle = true)
+        public async Task<List<PlaylistOutput.Videos>> GetVideosByPlaylistId(string playlistId, bool sortByTitle = true)
         {
             var youtubeClient = new YoutubeClient(_apiKey);
 
