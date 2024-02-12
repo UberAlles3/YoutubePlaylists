@@ -31,6 +31,8 @@ namespace YoutubePlaylists
                 try
                 {
                     Directory.CreateDirectory(txtExportPath.Text);
+                    Settings.ExportPath = txtExportPath.Text;
+                    lblExportPath.Text = txtExportPath.Text;
                 }
                 catch(Exception ex)
                 {
