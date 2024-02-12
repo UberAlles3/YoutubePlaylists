@@ -19,6 +19,12 @@ namespace YoutubePlaylists
 {
     public partial class Form1 : Form
     {
+        private enum WaitEnum
+        {
+            Show,
+            Hide
+        }
+        
         //private static string _playlistId = "PLd4S0e5MPnVi3fD3O0VKFLyUwbiNrsHRF"; // https://www.youtube.com/playlist?list=PLzByySESNL7GKiOXOs7ew5vEFBxuJvf0D
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
         private static string _playlistId = "";
@@ -38,6 +44,16 @@ namespace YoutubePlaylists
             picSpinner.Visible = false;
             picSpinner2.Visible = false;
             lblPlaylistName.Text = "";
+        }
+
+        // Form Display mode, wait cursor
+        private void FormDisplayWaitForTask(WaitEnum waitEnum)
+        {
+            this.Cursor = (waitEnum == WaitEnum.Show) ? Cursors.Default : Cursors.WaitCursor;
+            picSpinner2.Visible = (waitEnum == WaitEnum.Hide);
+            lblPlaylistName.Visible = (waitEnum == WaitEnum.Show);
+            panel1.Enabled = (waitEnum == WaitEnum.Show);
+            Application.DoEvents();
         }
 
         #region ********************************** Playlists Panel **********************************
@@ -71,10 +87,7 @@ namespace YoutubePlaylists
             lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", " - ").Replace(",", " - ");
             _playlistId = Playlists.ElementAt(element).PlaylistId;
 
-            picSpinner2.Visible = true;
-            lblPlaylistName.Visible = false;
-            panel1.Enabled = false;
-            Application.DoEvents();
+            FormDisplayWaitForTask(WaitEnum.Hide);
 
             /////////////////////////////// Get Videos
             string playlistId = Playlists.ElementAt(element).PlaylistId;
@@ -82,9 +95,7 @@ namespace YoutubePlaylists
             DisplayVideos(Videos);
             //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-            picSpinner2.Visible = false;
-            lblPlaylistName.Visible = true;
-            panel1.Enabled = true;
+            FormDisplayWaitForTask(WaitEnum.Show);
         }
         #endregion
 
@@ -223,13 +234,42 @@ namespace YoutubePlaylists
 
         private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           ApplicationPlaylistExport.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
+            FormDisplayWaitForTask(WaitEnum.Hide);
+            ApplicationPlaylistExport.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
+            FormDisplayWaitForTask(WaitEnum.Show);
         }
         #endregion
 
+        private void exportAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void mergeAllExportsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FormDisplayWaitForTask(WaitEnum.Hide);
             ApplicationPlaylistExport.MergeAllPlaylists();
+            FormDisplayWaitForTask(WaitEnum.Show);
+        }
+
+        private void openExportedFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Open Exported Output File";
+            ofd.Filter = "Exported Files|*.csv|All Files|*.*";
+            ofd.DefaultExt = "cvs";
+            //MessageBox.Show(Application.ExecutablePath);
+            ofd.InitialDirectory = Path.Combine(Settings.ExportPath);
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                var p = new Process();
+                p.StartInfo = new ProcessStartInfo(ofd.FileName)
+                {
+                    UseShellExecute = true
+                };
+                p.Start();
+            }
         }
     }
 }

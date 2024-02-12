@@ -47,6 +47,8 @@ namespace YoutubePlaylists
             this.exportAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mergeAllExportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openExportedFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSearch = new System.Windows.Forms.Button();
             this.picSpinner = new System.Windows.Forms.PictureBox();
             this.picSpinner2 = new System.Windows.Forms.PictureBox();
@@ -141,7 +143,8 @@ namespace YoutubePlaylists
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem,
             this.exportingToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.exportOutputToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1085, 24);
@@ -185,6 +188,7 @@ namespace YoutubePlaylists
             this.exportAllToolStripMenuItem.Name = "exportAllToolStripMenuItem";
             this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.exportAllToolStripMenuItem.Text = "Export &All Playlists";
+            this.exportAllToolStripMenuItem.Click += new System.EventHandler(this.exportAllToolStripMenuItem_Click);
             // 
             // mergeAllExportsToolStripMenuItem
             // 
@@ -195,9 +199,24 @@ namespace YoutubePlaylists
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openExportedFileToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "&Settings";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.settingsToolStripMenuItem.Text = "Export &Output";
+            // 
+            // openExportedFileToolStripMenuItem
+            // 
+            this.openExportedFileToolStripMenuItem.Name = "openExportedFileToolStripMenuItem";
+            this.openExportedFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openExportedFileToolStripMenuItem.Text = "&Open Exported File";
+            this.openExportedFileToolStripMenuItem.Click += new System.EventHandler(this.openExportedFileToolStripMenuItem_Click);
+            // 
+            // exportOutputToolStripMenuItem
+            // 
+            this.exportOutputToolStripMenuItem.Name = "exportOutputToolStripMenuItem";
+            this.exportOutputToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.exportOutputToolStripMenuItem.Text = "&Settings";
             // 
             // btnSearch
             // 
@@ -285,6 +304,8 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.PictureBox picSpinner;
         private System.Windows.Forms.PictureBox picSpinner2;
+        private System.Windows.Forms.ToolStripMenuItem exportOutputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openExportedFileToolStripMenuItem;
     }
 }
 
