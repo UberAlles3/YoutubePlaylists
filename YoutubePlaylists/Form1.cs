@@ -38,6 +38,7 @@ namespace YoutubePlaylists
             lblPlaylistName.Text = "";
         }
 
+        #region ********************************** Playlists Panel **********************************
         private void btnGetPlaylists_Click(object sender, EventArgs e)
         {
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
@@ -70,17 +71,18 @@ namespace YoutubePlaylists
 
             DisplayVideos(Videos);
         }
+        #endregion
 
+        #region ********************************** Video Panel List **********************************
         private void DisplayVideos(List<PlaylistOutput.Videos> videos)
         {
             panel2.Controls.Clear();
             txtDeletedVideos.Text = "";
             List<PictureBox> pictureList = panel2.CreateDynamicControls<PictureBox>("picVideo", videos.Count, 80, 0, 12, 10, 60, 100);
-            List<Label> labelList = panel2.CreateDynamicControls<Label>("lblVideo", videos.Count, 80, 0, 12, 120, 18, 360);
+            List<Label> labelList = panel2.CreateDynamicControls<Label>("lblVideo", videos.Count, 80, 0, 12, 120, 18, 350);
             List<Label> labelDescList = panel2.CreateDynamicControls<Label>("lblVideoDesc", videos.Count, 80, 0, 32, 120, 16, 360);
             List<Label> labelVideoIdList = panel2.CreateDynamicControls<Label>("lblVideoID", videos.Count, 80, 0, 52, 120, 20, 160);
-            List<Button> btnGetInfoList = panel2.CreateDynamicControls<Button>("btnGetInfo", videos.Count, 80, 0, 48, 350, 24, 80);
-            List<Button> btnRemoveList = panel2.CreateDynamicControls<Button>("btnRemove", videos.Count, 80, 0, 48, 440, 24, 60);
+            List<Button> btnRemoveList = panel2.CreateDynamicControls<Button>("btnRemove", videos.Count, 80, 0, 12, 480, 24, 60);
 
             int i = 0;
             foreach (PlaylistOutput.Videos item in videos)
@@ -95,7 +97,6 @@ namespace YoutubePlaylists
                     labelDescList.ElementAt(i).Text = item.Description;
                     //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 7.0F, FontStyle.Regular);
                     labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
-                    btnGetInfoList.ElementAt(i).Text = "Remove";
                     //btnRemoveList.ElementAt(i).Visible = true;
                     btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                 }
@@ -114,15 +115,38 @@ namespace YoutubePlaylists
                     else
                         labelVideoIdList.ElementAt(i).Text = $"Playlist: {item.PlaylistTitle}";
 
-                    btnGetInfoList.ElementAt(i).Text = "Get Info";
                     //btnRemoveList.ElementAt(i).Visible = true;
-                    btnGetInfoList.ElementAt(i).Click += new EventHandler(btnGetInfo_Click);
                     btnRemoveList.ElementAt(i).Text = "Remove";
                     //btnRemoveList.ElementAt(i).Visible = true;
                     btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                 }
                 i++;
             }
+        }
+        #endregion
+
+        #region ******************************* Video Panel Control Events ******************************
+        private void pictureList_Click(object sender, EventArgs e)
+        {
+            int element = (int)((PictureBox)sender).Tag;
+            string VideoId = Videos.ElementAt(element).VideoId;
+
+            try
+            {
+                Process.Start("cmd", "/c start https://www.youtube.com/watch?v=" + VideoId);
+            }
+            catch (Win32Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void pictureList_MouseEnter(object sender, EventArgs e)
+        {
+            ((PictureBox)sender).Cursor = Cursors.Hand;
+        }
+        private void pictureList_MouseLeave(object sender, EventArgs e)
+        {
+            ((PictureBox)sender).Cursor = Cursors.Default;
         }
 
         private void labelList_MouseEnter(object sender, EventArgs e)
@@ -135,36 +159,6 @@ namespace YoutubePlaylists
             ((Label)sender).BackColor = panel1.BackColor;
             ((Label)sender).Cursor = Cursors.Default;
         }
-        private void pictureList_MouseEnter(object sender, EventArgs e)
-        {
-            ((PictureBox)sender).Cursor = Cursors.Hand;
-        }
-        private void pictureList_MouseLeave(object sender, EventArgs e)
-        {
-            ((PictureBox)sender).Cursor = Cursors.Default;
-        }
-        private void pictureList_Click(object sender, EventArgs e)
-        {
-            int element = (int)((PictureBox)sender).Tag;
-            string VideoId = Videos.ElementAt(element).VideoId;
-
-            try
-            {
-                System.Diagnostics.Process.Start("cmd", "/c start https://www.youtube.com/watch?v=" + VideoId);
-            }
-            catch (Win32Exception ex)
-            {
-               MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void btnGetInfo_Click(object sender, EventArgs e)
-        {
-            int element = (int)((Button)sender).Tag;
-            string playlistVideoId = Videos.ElementAt(element).PlaylistVideoId;
-        }
-
-
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
@@ -181,10 +175,43 @@ namespace YoutubePlaylists
             {
                 MessageBox.Show(result);
             }
+
             ((Button)sender).Visible = false;
         }
+        #endregion
 
-        private void btnMerge_Click(object sender, EventArgs e)
+        #region ************************************ Form Button Events **************************************
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            txtSearch.Text = txtSearch.Text.Trim();
+
+            if (txtSearch.Text.Length < 3)
+            {
+                MessageBox.Show("Enter a search term with at least 2 characters.");
+                return;
+            }
+
+            lblPlaylistName.Text = "Search results for: " + txtSearch.Text;
+
+            Videos = ApplicationPlaylistExport.FindInPlaylists(txtSearch.Text);
+
+            DisplayVideos(Videos);
+        }
+        #endregion
+
+        #region ****************************** M E N U ************************************
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           ApplicationPlaylistExport.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
+        }
+        #endregion
+
+        private void mergeAllExportsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             const int chunkSize = 2 * 1024; // 2KB
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -206,49 +233,6 @@ namespace YoutubePlaylists
                     }
                 }
             }
-        }
-
-        private void btnFind_Click(object sender, EventArgs e)
-        {
-            txtSearch.Text = txtSearch.Text.Trim();
-
-            if (txtSearch.Text.Length < 3)
-            {
-                MessageBox.Show("Enter a search term with at least 2 characters.");
-                return;
-            }
-
-            lblPlaylistName.Text = "Search results for: " + txtSearch.Text;
-
-            Videos = ApplicationPlaylistExport.FindInPlaylists(txtSearch.Text);
-
-            DisplayVideos(Videos);
-        }
-
-         public List<Thumbnails> AddOne(string imageUri)
-        {
-            List<Thumbnails> thumbnails = new List<Thumbnails>();
-            Uri uri = new Uri(imageUri);
-            thumbnails.Add(new Thumbnails() { ImageUri = uri });
-
-            return thumbnails;
-        }
-
-        public string Truncate(string value, int maxLength)
-        {
-            if (string.IsNullOrEmpty(value)) return value;
-            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
-        }
-
-        // ****************************** M E N U ************************************
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           ApplicationPlaylistExport.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
         }
     }
 }

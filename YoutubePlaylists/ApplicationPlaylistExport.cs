@@ -36,12 +36,12 @@ namespace YoutubePlaylists
         {
             List<PlaylistOutput.Videos> videos = new List<PlaylistOutput.Videos>();
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
 
             searchTerm = searchTerm.ToLower();
 
 
-            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(Path.Combine(path, "Playlists.AllPlaylists.csv"));
+            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(path);
             List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains(searchTerm) || x.Description.ToLower().Contains(searchTerm)).ToList();
 
             foreach (YoutubeVideo item in foundVideos)
