@@ -210,40 +210,22 @@ namespace YoutubePlaylists
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            txtSearch.Text = txtSearch.Text.Trim();
 
-            if(txtSearch.Text.Trim().Length < 3)
+            if (txtSearch.Text.Length < 3)
             {
                 MessageBox.Show("Enter a search term with at least 2 characters.");
                 return;
             }
 
-            lblPlaylistName.Text = "Search results for: " + txtSearch.Text.Trim();
+            lblPlaylistName.Text = "Search results for: " + txtSearch.Text;
 
-            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(Path.Combine(path, "Playlists.AllPlaylists.csv"));
-            List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains(txtSearch.Text.ToLower()) || x.Description.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
-
-            Videos.Clear();
-            foreach(YoutubeVideo item in foundVideos)
-            {
-                List<Thumbnails> t = new List<Thumbnails>();
-                t.Add(new Thumbnails() { ImageUri = new Uri(item.ImageUri) });
-
-                Videos.Add(new PlaylistOutput.Videos
-                {
-                    PlaylistVideoId = item.PlaylistVideoId,
-                    PlaylistTitle = item.PlaylistTitle,
-                    VideoId = item.VideoId,
-                    Title = item.Title,
-                    Description = item.Description,
-                    ThumbnailsData = t
-                });
-            }
+            Videos = ApplicationPlaylistExport.FindInPlaylists(txtSearch.Text);
 
             DisplayVideos(Videos);
         }
 
-        public List<Thumbnails> AddOne(string imageUri)
+         public List<Thumbnails> AddOne(string imageUri)
         {
             List<Thumbnails> thumbnails = new List<Thumbnails>();
             Uri uri = new Uri(imageUri);
@@ -266,7 +248,7 @@ namespace YoutubePlaylists
 
         private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           ApplicationYoutube.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
+           ApplicationPlaylistExport.ExportPlaylist(Videos, _playlistId, lblPlaylistName.Text);
         }
     }
 }
