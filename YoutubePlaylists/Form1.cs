@@ -301,6 +301,7 @@ namespace YoutubePlaylists
                 p.Start();
             }
         }
+        
         private void backupMergedPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string sourcePath = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
