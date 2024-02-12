@@ -289,7 +289,7 @@ namespace YoutubePlaylists
             ofd.Filter = "Exported Files|*.csv|All Files|*.*";
             ofd.DefaultExt = "cvs";
             //MessageBox.Show(Application.ExecutablePath);
-            ofd.InitialDirectory = Path.Combine(Settings.ExportPath);
+            ofd.InitialDirectory = Settings.ExportPath;
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -300,6 +300,34 @@ namespace YoutubePlaylists
                 };
                 p.Start();
             }
+        }
+        private void backupMergedPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sourcePath = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
+            string targetPath = Path.Combine(Settings.ExportPath, "Backups");
+            // Make sure path exists
+            Directory.CreateDirectory(targetPath);
+
+            string[] inputFiles = Directory.GetFiles(targetPath, "Playlists.AllPlaylists*.csv");
+            if (inputFiles.Length == 0) // No backups yet
+                targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists.csv");
+            else
+            {
+                // increment the name of the backup (2), (3), etc.
+                inputFiles = Directory.GetFiles(targetPath, "Playlists.AllPlaylists(*.csv");
+                if (inputFiles.Length == 0) // No incremented backups, start with (2)
+                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists(2).csv");
+                else
+                {
+                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists|increment|.csv");
+                    inputFiles = inputFiles.OrderBy(x => x).ToArray();
+                    string highest = inputFiles.Last()._Between("(", ")");
+                    int next = int.Parse(highest) + 1;
+                    targetPath = targetPath.Replace("|increment|", $"({next})");
+                }
+            }
+
+            File.Copy(sourcePath, targetPath);
         }
     }
 }

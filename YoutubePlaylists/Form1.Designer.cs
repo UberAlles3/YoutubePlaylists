@@ -54,6 +54,7 @@ namespace YoutubePlaylists
             this.picSpinner2 = new System.Windows.Forms.PictureBox();
             this.lblTaskFeedback = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.backupMergedPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSpinner2)).BeginInit();
@@ -202,7 +203,8 @@ namespace YoutubePlaylists
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openExportedFileToolStripMenuItem});
+            this.openExportedFileToolStripMenuItem,
+            this.backupMergedPlaylistToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.settingsToolStripMenuItem.Text = "Export &Output";
@@ -210,7 +212,7 @@ namespace YoutubePlaylists
             // openExportedFileToolStripMenuItem
             // 
             this.openExportedFileToolStripMenuItem.Name = "openExportedFileToolStripMenuItem";
-            this.openExportedFileToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.openExportedFileToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.openExportedFileToolStripMenuItem.Text = "&Open Exported File";
             this.openExportedFileToolStripMenuItem.Click += new System.EventHandler(this.openExportedFileToolStripMenuItem_Click);
             // 
@@ -273,6 +275,13 @@ namespace YoutubePlaylists
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // backupMergedPlaylistToolStripMenuItem
+            // 
+            this.backupMergedPlaylistToolStripMenuItem.Name = "backupMergedPlaylistToolStripMenuItem";
+            this.backupMergedPlaylistToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.backupMergedPlaylistToolStripMenuItem.Text = "&Backup Merged Playlist";
+            this.backupMergedPlaylistToolStripMenuItem.Click += new System.EventHandler(this.backupMergedPlaylistToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnSearch;
@@ -334,6 +343,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.ToolStripMenuItem openExportedFileToolStripMenuItem;
         private System.Windows.Forms.Label lblTaskFeedback;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.ToolStripMenuItem backupMergedPlaylistToolStripMenuItem;
     }
 }
 
