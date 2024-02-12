@@ -97,17 +97,17 @@ namespace YoutubePlaylists
             // 
             // txtDeletedVideos
             // 
-            this.txtDeletedVideos.Location = new System.Drawing.Point(896, 236);
+            this.txtDeletedVideos.Location = new System.Drawing.Point(899, 58);
             this.txtDeletedVideos.Multiline = true;
             this.txtDeletedVideos.Name = "txtDeletedVideos";
             this.txtDeletedVideos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDeletedVideos.Size = new System.Drawing.Size(174, 345);
+            this.txtDeletedVideos.Size = new System.Drawing.Size(174, 206);
             this.txtDeletedVideos.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(931, 218);
+            this.label2.Location = new System.Drawing.Point(933, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 15);
             this.label2.TabIndex = 5;
@@ -126,7 +126,7 @@ namespace YoutubePlaylists
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(629, 7);
+            this.txtSearch.Location = new System.Drawing.Point(625, 7);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(174, 23);
             this.txtSearch.TabIndex = 10;
@@ -196,7 +196,7 @@ namespace YoutubePlaylists
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(810, 7);
+            this.btnSearch.Location = new System.Drawing.Point(806, 7);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 12;

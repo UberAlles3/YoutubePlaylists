@@ -32,14 +32,35 @@ namespace YoutubePlaylists
             }
         }
 
-        public static List<PlaylistOutput.Videos> FindInPlaylists(string searchTerm)
+        public static void MergeAllPlaylists()
+        {
+            const int chunkSize = 2 * 1024; // 2KB
+
+            string[] inputFiles = Directory.GetFiles(Settings.ExportPath, "Playlist.*.csv");
+
+            using (var output = File.Create(Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv")))
+            {
+                foreach (var file in inputFiles)
+                {
+                    using (var input = File.OpenRead(file))
+                    {
+                        var buffer = new byte[chunkSize];
+                        int bytesRead;
+                        while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            output.Write(buffer, 0, bytesRead);
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<PlaylistOutput.Videos> SearchPlaylists(string searchTerm)
         {
             List<PlaylistOutput.Videos> videos = new List<PlaylistOutput.Videos>();
-
             string path = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
 
             searchTerm = searchTerm.ToLower();
-
 
             List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(path);
             List<YoutubeVideo> foundVideos = youtubeVideos.Where(x => x.Title.ToLower().Contains(searchTerm) || x.Description.ToLower().Contains(searchTerm)).ToList();

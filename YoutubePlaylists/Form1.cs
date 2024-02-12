@@ -193,7 +193,7 @@ namespace YoutubePlaylists
 
             lblPlaylistName.Text = "Search results for: " + txtSearch.Text;
 
-            Videos = ApplicationPlaylistExport.FindInPlaylists(txtSearch.Text);
+            Videos = ApplicationPlaylistExport.SearchPlaylists(txtSearch.Text);
 
             DisplayVideos(Videos);
         }
@@ -213,26 +213,7 @@ namespace YoutubePlaylists
 
         private void mergeAllExportsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            const int chunkSize = 2 * 1024; // 2KB
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-            string[] inputFiles = Directory.GetFiles(path, "Playlist.*.csv");
-
-            using (var output = File.Create(Path.Combine(path, "Playlists.AllPlaylists.csv")))
-            {
-                foreach (var file in inputFiles)
-                {
-                    using (var input = File.OpenRead(file))
-                    {
-                        var buffer = new byte[chunkSize];
-                        int bytesRead;
-                        while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            output.Write(buffer, 0, bytesRead);
-                        }
-                    }
-                }
-            }
+            ApplicationPlaylistExport.MergeAllPlaylists();
         }
     }
 }
