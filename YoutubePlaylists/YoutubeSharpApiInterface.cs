@@ -43,16 +43,19 @@ namespace YoutubePlaylists
         {
             var youtubeClient = new YoutubeClient(_apiKey);
 
-            Debug.WriteLine($"--- --- --- --- Playlist Videos --- --- --- ---");
-            var responsePlaylist = Task.Run(() => youtubeClient.GetPlayListAsync(new PlaylistInput
-            {
-                PlaylistId = playlistId
-            }, CancellationToken.None)).Result;
+            //Debug.WriteLine($"--- --- --- --- Playlist Videos --- --- --- ---");
 
-            foreach (var item in responsePlaylist.VideosData)
-            {
-                Console.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.VideoId})");
-            }
+            //var responsePlaylist = Task.Run(() => youtubeClient.GetPlayListAsync(new PlaylistInput
+            //{
+            //    PlaylistId = playlistId
+            //}, CancellationToken.None)).Result; 
+            
+            var responsePlaylist = await youtubeClient.GetPlayListAsync(new PlaylistInput{PlaylistId = playlistId}, CancellationToken.None);
+
+            //foreach (var item in responsePlaylist.VideosData)
+            //{
+            //    Console.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.VideoId})");
+            //}
 
             if (sortByTitle)
             {

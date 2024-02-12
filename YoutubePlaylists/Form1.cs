@@ -54,7 +54,6 @@ namespace YoutubePlaylists
             int i = 0;
             foreach (ChannelOutput.Playlist item in Playlists)
             {
-                //checkboxlList.ElementAt(i).CheckedChanged += new EventHandler(chkboxPlaylist_CheckedChanged);
                 labelList.ElementAt(i).Text = item.Title.Replace("/", " - ").Replace(",", " - ") + $"  ({item.ItemCount})";
                 labelList.ElementAt(i).TextAlign = ContentAlignment.MiddleLeft;
                 labelList.ElementAt(i).MouseEnter += new EventHandler(labelList_MouseEnter);
@@ -77,7 +76,7 @@ namespace YoutubePlaylists
             panel1.Enabled = false;
             Application.DoEvents();
 
-            /////////////////////////////// Get videos
+            /////////////////////////////// Get Videos
             string playlistId = Playlists.ElementAt(element).PlaylistId;
             Videos = await _youtube.GetVideosByPlaylistId(playlistId);
             DisplayVideos(Videos);
@@ -208,7 +207,7 @@ namespace YoutubePlaylists
                 return;
             }
 
-            lblPlaylistName.Text = "Search results for: " + txtSearch.Text;
+            lblPlaylistName.Text = "Search Results";
 
             Videos = ApplicationPlaylistExport.SearchPlaylists(txtSearch.Text);
 
