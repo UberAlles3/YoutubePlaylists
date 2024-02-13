@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 
 namespace GD.Extensions
@@ -107,7 +105,7 @@ namespace GD.Extensions
             return aStringBuilder.ToString();
         }
 
-         /// <summary>
+        /// <summary>
         /// Removes all characters of a character value from a string.
         /// </summary>
         /// <param name="value">A string object</param>

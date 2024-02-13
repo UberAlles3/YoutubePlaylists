@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace YoutubePlaylists
 {
@@ -13,9 +9,9 @@ namespace YoutubePlaylists
 
         public static string ExportPath
         {
-            get 
+            get
             {
-                if(string.IsNullOrEmpty(Properties.Settings.Default.ExportsFolder))
+                if (string.IsNullOrEmpty(Properties.Settings.Default.ExportsFolder))
                 {
                     _exportPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "YoutubePlaylists");
                     Properties.Settings.Default.ExportsFolder = _exportPath;
@@ -29,9 +25,9 @@ namespace YoutubePlaylists
                 // Make sure path exists
                 Directory.CreateDirectory(_exportPath);
 
-                return _exportPath; 
+                return _exportPath;
             }
-            set 
+            set
             {
                 _exportPath = value;
                 Properties.Settings.Default.ExportsFolder = _exportPath;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using YoutubeSharpApi;
@@ -30,7 +29,7 @@ namespace YoutubePlaylists
                 Console.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.PlaylistId})");
             }
 
-            if(sortByTitle)
+            if (sortByTitle)
             {
                 List<ChannelOutput.Playlist> SortedList = responseChannel.PlaylistData.OrderBy(o => o.Title).ToList();
                 return SortedList;
@@ -49,8 +48,8 @@ namespace YoutubePlaylists
             //{
             //    PlaylistId = playlistId
             //}, CancellationToken.None)).Result; 
-            
-            var responsePlaylist = await youtubeClient.GetPlayListAsync(new PlaylistInput{PlaylistId = playlistId}, CancellationToken.None);
+
+            var responsePlaylist = await youtubeClient.GetPlayListAsync(new PlaylistInput { PlaylistId = playlistId }, CancellationToken.None);
 
             //foreach (var item in responsePlaylist.VideosData)
             //{

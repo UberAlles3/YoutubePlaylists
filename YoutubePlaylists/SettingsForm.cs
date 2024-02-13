@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace YoutubePlaylists
@@ -26,7 +19,7 @@ namespace YoutubePlaylists
 
         private void btnSaveExportPath_Click(object sender, EventArgs e)
         {
-            if(lblExportPath.Text != txtExportPath.Text)
+            if (lblExportPath.Text != txtExportPath.Text)
             {
                 try
                 {
@@ -34,7 +27,7 @@ namespace YoutubePlaylists
                     Settings.ExportPath = txtExportPath.Text;
                     lblExportPath.Text = txtExportPath.Text;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Invalid path. Setting was not saved.");
                 }

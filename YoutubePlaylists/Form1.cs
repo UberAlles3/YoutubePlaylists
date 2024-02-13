@@ -1,19 +1,14 @@
-﻿using System;
+﻿using GD.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Diagnostics;
-using YoutubeSharpApi;
-using YoutubeSharpApi.Models;
+using System.Drawing;
 using System.IO;
-using System.Text.RegularExpressions;
-using GD.Extensions;
+using System.Linq;
+using System.Windows.Forms;
+using YoutubeSharpApi.Models;
 
 namespace YoutubePlaylists
 {
@@ -24,7 +19,7 @@ namespace YoutubePlaylists
             Show,
             Hide
         }
-        
+
         //private static string _playlistId = "PLd4S0e5MPnVi3fD3O0VKFLyUwbiNrsHRF"; // https://www.youtube.com/playlist?list=PLzByySESNL7GKiOXOs7ew5vEFBxuJvf0D
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
         private static string _playlistId = "";
@@ -150,7 +145,7 @@ namespace YoutubePlaylists
                     labelList.ElementAt(i).Text = item.Title;
                     labelDescList.ElementAt(i).Text = item.Description;
                     //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 6.0F, FontStyle.Regular);
-                    if(string.IsNullOrEmpty(item.PlaylistTitle))
+                    if (string.IsNullOrEmpty(item.PlaylistTitle))
                         labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
                     else
                         labelVideoIdList.ElementAt(i).Text = $"Playlist: {item.PlaylistTitle}";
@@ -308,7 +303,7 @@ namespace YoutubePlaylists
                 p.Start();
             }
         }
-        
+
         private void backupMergedPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string sourcePath = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
