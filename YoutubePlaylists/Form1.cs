@@ -50,6 +50,13 @@ namespace YoutubePlaylists
             exportAllToolStripMenuItem.Enabled = false;
         }
 
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            panel1.Height = this.Height - 150;
+            panel2.Height = this.Height - 91;
+        }
+
         // Form Display mode, wait cursor
         private void FormDisplayWaitForTask(WaitEnum waitEnum)
         {
