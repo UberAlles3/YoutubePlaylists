@@ -34,7 +34,9 @@ namespace YoutubePlaylists
                 Properties.Settings.Default.Save();
             }
         }
-
-
+        public override string ToString()
+        {
+            return $"ExportPath: {ExportPath}";
+        }
     }
 }

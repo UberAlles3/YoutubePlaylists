@@ -12,7 +12,6 @@ namespace YoutubePlaylists
     public class YoutubeSharpApiInterface
     {
         private static string _apiKey = "AIzaSyA1B4A-V8Dp3lFYnSQjJEoABvpPQyDraRw"; // https://developers.google.com/youtube/v3/getting-started
-        //private List<ChannelOutput.Playlist> Playlists = new List<ChannelOutput.Playlist>();
 
         public List<ChannelOutput.Playlist> GetPlaylistsByChannelId(string channelId, bool sortByTitle = true)
         {
@@ -42,19 +41,7 @@ namespace YoutubePlaylists
         {
             var youtubeClient = new YoutubeClient(_apiKey);
 
-            //Debug.WriteLine($"--- --- --- --- Playlist Videos --- --- --- ---");
-
-            //var responsePlaylist = Task.Run(() => youtubeClient.GetPlayListAsync(new PlaylistInput
-            //{
-            //    PlaylistId = playlistId
-            //}, CancellationToken.None)).Result; 
-
             var responsePlaylist = await youtubeClient.GetPlayListAsync(new PlaylistInput { PlaylistId = playlistId }, CancellationToken.None);
-
-            //foreach (var item in responsePlaylist.VideosData)
-            //{
-            //    Console.WriteLine($"{item.Position} - {item.Title} (Playlist Id : {item.VideoId})");
-            //}
 
             if (sortByTitle)
             {

@@ -35,5 +35,10 @@ namespace YoutubePlaylists
             youtubeVideo.ImageUri = values[6];
             return youtubeVideo;
         }
+
+        public override string ToString()
+        {
+            return $"PlaylistId: {PlaylistId}  PlaylistTitle: {PlaylistTitle} VideoId: {VideoId} Title: {Title}";
+        }
     }
 }

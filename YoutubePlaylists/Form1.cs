@@ -73,7 +73,7 @@ namespace YoutubePlaylists
             Playlists = _youtube.GetPlaylistsByChannelId(txtChannelId.Text.Trim());
 
             panel1.Controls.Clear();
-            List<Label> labelList = panel1.CreateDynamicControls<Label>("lblPlaylist", Playlists.Count, 20, 0, 12, 8, 20, 200);
+            List<Label> labelList = panel1.CreateDynamicControls<Label>("lblPlaylist", Playlists.Count, 20, 0, new Rectangle(8, 12, 200, 20));
 
             int i = 0;
             foreach (ChannelOutput.Playlist item in Playlists)
