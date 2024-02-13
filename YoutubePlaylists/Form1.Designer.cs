@@ -49,7 +49,7 @@ namespace YoutubePlaylists
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openExportedFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backupMergedPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sttingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSearch = new System.Windows.Forms.Button();
             this.picSpinner = new System.Windows.Forms.PictureBox();
             this.picSpinner2 = new System.Windows.Forms.PictureBox();
@@ -147,7 +147,7 @@ namespace YoutubePlaylists
             this.exitToolStripMenuItem,
             this.exportingToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.exportOutputToolStripMenuItem});
+            this.sttingsMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1085, 24);
@@ -225,10 +225,10 @@ namespace YoutubePlaylists
             // 
             // exportOutputToolStripMenuItem
             // 
-            this.exportOutputToolStripMenuItem.Name = "exportOutputToolStripMenuItem";
-            this.exportOutputToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.exportOutputToolStripMenuItem.Text = "&Settings";
-            this.exportOutputToolStripMenuItem.Click += new System.EventHandler(this.exportOutputToolStripMenuItem_Click);
+            this.sttingsMenuItem.Name = "exportOutputToolStripMenuItem";
+            this.sttingsMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.sttingsMenuItem.Text = "&Settings";
+            this.sttingsMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // btnSearch
             // 
@@ -341,7 +341,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.PictureBox picSpinner;
         private System.Windows.Forms.PictureBox picSpinner2;
-        private System.Windows.Forms.ToolStripMenuItem exportOutputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sttingsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openExportedFileToolStripMenuItem;
         private System.Windows.Forms.Label lblTaskFeedback;
         private System.Windows.Forms.Button btnCancel;

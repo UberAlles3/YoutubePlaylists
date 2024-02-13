@@ -20,7 +20,6 @@ namespace YoutubePlaylists
             Hide
         }
 
-        //private static string _playlistId = "PLd4S0e5MPnVi3fD3O0VKFLyUwbiNrsHRF"; // https://www.youtube.com/playlist?list=PLzByySESNL7GKiOXOs7ew5vEFBxuJvf0D
         private static string _channelId = "UCxMu8S3Q9Btpa56CsI58KDQ"; // https://www.youtube.com/@uberalles2/playlists
         private static string _playlistId = "";
         private static bool _cancelTask = false;
@@ -238,7 +237,7 @@ namespace YoutubePlaylists
         }
         #endregion
 
-        #region ****************************** M E N U ************************************
+        #region ****************************** Menu Items Events ************************************
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -277,6 +276,7 @@ namespace YoutubePlaylists
             _cancelTask = false;
         }
 
+        // Merge the individual exported playlists into one excel file.
         private void mergeAllExportsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormDisplayWaitForTask(WaitEnum.Hide);
@@ -284,13 +284,13 @@ namespace YoutubePlaylists
             FormDisplayWaitForTask(WaitEnum.Show);
         }
 
+        // Open an exported playlist excel file.
         private void openExportedFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Open Exported Output File";
             ofd.Filter = "Exported Files|*.csv|All Files|*.*";
             ofd.DefaultExt = "cvs";
-            //MessageBox.Show(Application.ExecutablePath);
             ofd.InitialDirectory = Settings.ExportPath;
 
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -306,34 +306,10 @@ namespace YoutubePlaylists
 
         private void backupMergedPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string sourcePath = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
-            string targetPath = Path.Combine(Settings.ExportPath, "Backups");
-            // Make sure path exists
-            Directory.CreateDirectory(targetPath);
-
-            string[] inputFiles = Directory.GetFiles(targetPath, "Playlists.AllPlaylists*.csv");
-            if (inputFiles.Length == 0) // No backups yet
-                targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists.csv");
-            else
-            {
-                // increment the name of the backup (2), (3), etc.
-                inputFiles = Directory.GetFiles(targetPath, "Playlists.AllPlaylists(*.csv");
-                if (inputFiles.Length == 0) // No incremented backups, start with (2)
-                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists(2).csv");
-                else
-                {
-                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists|increment|.csv");
-                    inputFiles = inputFiles.OrderBy(x => x).ToArray();
-                    string highest = inputFiles.Last()._Between("(", ")");
-                    int next = int.Parse(highest) + 1;
-                    targetPath = targetPath.Replace("|increment|", $"({next})");
-                }
-            }
-
-            File.Copy(sourcePath, targetPath);
+            ApplicationPlaylistExport.BackupMergedPlaylists();
         }
-
-        private void exportOutputToolStripMenuItem_Click(object sender, EventArgs e)
+ 
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm f = new SettingsForm();
             f.ShowDialog();

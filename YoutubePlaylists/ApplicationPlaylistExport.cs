@@ -51,6 +51,34 @@ namespace YoutubePlaylists
                 }
             }
         }
+        public static void BackupMergedPlaylists()
+        {
+            string sourcePath = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
+            string targetPath = Path.Combine(Settings.ExportPath, "Backups");
+            // Make sure path exists
+            Directory.CreateDirectory(targetPath);
+
+            string[] inputFiles = Directory.GetFiles(targetPath, "Playlists.AllPlaylists*.csv");
+            if (inputFiles.Length == 0) // No backups yet
+                targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists.csv");
+            else
+            {
+                // increment the name of the backup (2), (3), etc.
+                inputFiles = Directory.GetFiles(targetPath, "Playlists.AllPlaylists(*.csv");
+                if (inputFiles.Length == 0) // No incremented backups, start with (2)
+                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists(2).csv");
+                else
+                {
+                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists|increment|.csv");
+                    inputFiles = inputFiles.OrderBy(x => x).ToArray();
+                    string highest = inputFiles.Last()._Between("(", ")");
+                    int next = int.Parse(highest) + 1;
+                    targetPath = targetPath.Replace("|increment|", $"({next})");
+                }
+            }
+
+            File.Copy(sourcePath, targetPath);
+        }
 
         public static List<PlaylistOutput.Videos> SearchPlaylists(string searchTerm)
         {
