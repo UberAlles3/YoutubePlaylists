@@ -55,6 +55,7 @@ namespace YoutubePlaylists
             this.picSpinner2 = new System.Windows.Forms.PictureBox();
             this.lblTaskFeedback = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.ComparetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSpinner2)).BeginInit();
@@ -147,6 +148,7 @@ namespace YoutubePlaylists
             this.exitToolStripMenuItem,
             this.exportingToolStripMenuItem,
             this.settingsToolStripMenuItem,
+            this.ComparetoolStripMenuItem,
             this.sttingsMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -165,7 +167,7 @@ namespace YoutubePlaylists
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem1.Text = "&Exit        Alt+F4";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -223,9 +225,9 @@ namespace YoutubePlaylists
             this.backupMergedPlaylistToolStripMenuItem.Text = "&Backup Merged Playlist";
             this.backupMergedPlaylistToolStripMenuItem.Click += new System.EventHandler(this.backupMergedPlaylistToolStripMenuItem_Click);
             // 
-            // exportOutputToolStripMenuItem
+            // sttingsMenuItem
             // 
-            this.sttingsMenuItem.Name = "exportOutputToolStripMenuItem";
+            this.sttingsMenuItem.Name = "sttingsMenuItem";
             this.sttingsMenuItem.Size = new System.Drawing.Size(61, 20);
             this.sttingsMenuItem.Text = "&Settings";
             this.sttingsMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
@@ -282,6 +284,13 @@ namespace YoutubePlaylists
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // ComparetoolStripMenuItem
+            // 
+            this.ComparetoolStripMenuItem.Name = "ComparetoolStripMenuItem";
+            this.ComparetoolStripMenuItem.Size = new System.Drawing.Size(68, 20);
+            this.ComparetoolStripMenuItem.Text = "Compare";
+            this.ComparetoolStripMenuItem.Click += new System.EventHandler(this.compareToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -346,6 +355,7 @@ namespace YoutubePlaylists
         private System.Windows.Forms.Label lblTaskFeedback;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolStripMenuItem backupMergedPlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ComparetoolStripMenuItem;
     }
 }
 

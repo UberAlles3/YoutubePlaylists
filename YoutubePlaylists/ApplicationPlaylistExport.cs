@@ -69,15 +69,21 @@ namespace YoutubePlaylists
                     targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists(2).csv");
                 else
                 {
-                    targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists|increment|.csv");
-                    inputFiles = inputFiles.OrderBy(x => x).ToArray();
-                    string highest = inputFiles.Last()._Between("(", ")");
+                    string highest = GetLatestBackupFilename(ref targetPath, ref inputFiles);
                     int next = int.Parse(highest) + 1;
                     targetPath = targetPath.Replace("|increment|", $"({next})");
                 }
             }
 
             File.Copy(sourcePath, targetPath);
+        }
+
+        public static string GetLatestBackupFilename(ref string targetPath, ref string[] inputFiles)
+        {
+            targetPath = Path.Combine(targetPath, "Playlists.AllPlaylists|increment|.csv");
+            inputFiles = inputFiles.OrderBy(x => x).ToArray();
+            string highest = inputFiles.Last()._Between("(", ")");
+            return highest;
         }
 
         public static List<PlaylistOutput.Videos> SearchPlaylists(string searchTerm)
@@ -108,5 +114,14 @@ namespace YoutubePlaylists
 
             return videos;
         }
+
+        public static List<YoutubeVideo> LoadPlaylist(string path)
+        {
+            List<YoutubeVideo> youtubeVideos = YoutubeVideo.LoadFromCsvFile(path);
+
+            return youtubeVideos;
+        }
+
+
     }
 }

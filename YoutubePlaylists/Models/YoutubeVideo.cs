@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using YoutubeSharpApi.Models;
 
 namespace YoutubePlaylists
 {
@@ -36,7 +38,30 @@ namespace YoutubePlaylists
             return youtubeVideo;
         }
 
-        public override string ToString()
+        public static List<PlaylistOutput.Videos> ConvertYoutubeVideoList(List<YoutubeVideo> youtubeVideoList)
+        {
+            List<PlaylistOutput.Videos> videos = new List<PlaylistOutput.Videos>();
+
+            foreach (YoutubeVideo item in youtubeVideoList)
+            {
+                List<Thumbnails> t = new List<Thumbnails>();
+                t.Add(new Thumbnails() { ImageUri = new Uri(item.ImageUri) });
+
+                videos.Add(new PlaylistOutput.Videos
+                {
+                    PlaylistVideoId = item.PlaylistVideoId,
+                    PlaylistTitle = item.PlaylistTitle,
+                    VideoId = item.VideoId,
+                    Title = item.Title,
+                    Description = item.Description,
+                    ThumbnailsData = t
+                });
+            }
+
+            return videos;
+        }
+
+public override string ToString()
         {
             return $"PlaylistId: {PlaylistId}  PlaylistTitle: {PlaylistTitle} VideoId: {VideoId} Title: {Title}";
         }

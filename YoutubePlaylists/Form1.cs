@@ -124,20 +124,31 @@ namespace YoutubePlaylists
                 string description = item.Description;
                 string title = item.Title;
 
-                if (item.Description.Contains("video is unavailabel") || item.Description.Contains("video is private") || item.Title.Contains("Deleted video"))
+                if (item.Description.Contains("video is unavailable") || item.Description.Contains("video is private") || item.Title.Contains("Deleted video"))
                 {
                     txtDeletedVideos.Text += item.VideoId + Environment.NewLine;
                     labelList.ElementAt(i).Text = item.Title;
                     labelDescList.ElementAt(i).Text = item.Description;
                     //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 7.0F, FontStyle.Regular);
-                    labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                    if(lblPlaylistName.Text == "Compared Deleted")
+                        labelVideoIdList.ElementAt(i).Text = $"{item.PlaylistTitle}     Id: {item.VideoId}";
+                    else
+                        labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
+                    
                     //btnRemoveList.ElementAt(i).Visible = true;
                     btnRemoveList.ElementAt(i).Click += new EventHandler(btnRemove_Click);
                 }
                 else
                 {
                     pictureList.ElementAt(i).SizeMode = PictureBoxSizeMode.CenterImage;
-                    pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
+
+
+                    try
+                    {
+                        pictureList.ElementAt(i).Load(item.ThumbnailsData[0].ImageUri.ToString());
+                    }
+                    catch {} // do nothing
+                                            
                     pictureList.ElementAt(i).MouseEnter += new EventHandler(pictureList_MouseEnter);
                     pictureList.ElementAt(i).MouseLeave += new EventHandler(pictureList_MouseLeave);
                     pictureList.ElementAt(i).Click += new EventHandler(pictureList_Click);
@@ -314,5 +325,92 @@ namespace YoutubePlaylists
             SettingsForm f = new SettingsForm();
             f.ShowDialog();
         }
+
+        private void compareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<YoutubeVideo> backupVideos = new List<YoutubeVideo>();
+            List<YoutubeVideo> deletedVideos = new List<YoutubeVideo>();
+            List<YoutubeVideo> addedVideos = new List<YoutubeVideo>();
+            List<YoutubeVideo> movedVideos = new List<YoutubeVideo>();
+
+            // Load current all videos list
+            string path = Path.Combine(Settings.ExportPath, "Playlists.AllPlaylists.csv");
+            List<YoutubeVideo> currentVideos = ApplicationPlaylistExport.LoadPlaylist(path);
+
+            //// load into playlist collection the backup of all videos  (if exists)
+            string backupPath = Path.Combine(Settings.ExportPath, "Backups");
+            // Make sure path exists
+            Directory.CreateDirectory(backupPath);
+
+            string[] inputFiles = Directory.GetFiles(backupPath, "Playlists.AllPlaylists*.csv");
+            if (inputFiles.Length == 0) // No backups yet
+            {
+                MessageBox.Show("No backups to compare. Exiting.");
+                return;
+            }
+            else
+            {
+                if (inputFiles.Length == 1)
+                {
+                    backupPath = Path.Combine(backupPath, inputFiles[0]);
+                }
+                else
+                {
+                    string highest = ApplicationPlaylistExport.GetLatestBackupFilename(ref backupPath, ref inputFiles);
+                    backupPath = backupPath.Replace("|increment|", $"({highest})");
+                }
+                backupVideos = ApplicationPlaylistExport.LoadPlaylist(backupPath);
+            }
+
+            // sort the playlists
+            currentVideos = currentVideos.OrderBy(x => x.PlaylistTitle).ThenBy(x => x.Title).ToList();
+            int backupVideoIndex = 0;
+            int currentVideoIndex = 0;
+            YoutubeVideo backup = null;
+            YoutubeVideo current = null;
+            backupVideos = backupVideos.OrderBy(x => x.PlaylistTitle).ThenBy(x => x.Title).ToList();
+
+
+            // interate thru the backup and the current
+            while (backupVideoIndex < backupVideos.Count() - 1)
+            {
+                backup = backupVideos[backupVideoIndex];
+                if (currentVideoIndex < currentVideos.Count)
+                   current = currentVideos[currentVideoIndex];
+
+                if (string.Compare($"{backup.PlaylistTitle}{backup.Title}", $"{current.PlaylistTitle}{current.Title}") == 0)
+                {
+                    backupVideoIndex++;
+                    currentVideoIndex++;
+                    continue;
+                }
+                else if (string.Compare($"{backup.PlaylistTitle}{backup.Title}", $"{current.PlaylistTitle}{current.Title}") < 0)
+                {    // backup is less than current meaning a backup video is not found in current list
+                    backupVideoIndex++;
+
+                    // Try to find if it was moved to another playlist
+                    List<YoutubeVideo> foundVideos = currentVideos.Where(x => x.VideoId == backup.VideoId).ToList();
+
+                    if (foundVideos.Count > 0) // moved
+                        movedVideos.Add(foundVideos[0]);
+                    else
+                    {
+                        backup.Description = "(video is unavailable) " + backup.Description;
+                        deletedVideos.Add(backup);
+                    }
+                }
+                else 
+                {
+                    currentVideoIndex++;
+                    addedVideos.Add(current);
+                }
+            }
+
+            // Display deleted videos
+            lblPlaylistName.Text = "Compared Deleted";
+            List<PlaylistOutput.Videos> deleted = YoutubeVideo.ConvertYoutubeVideoList(deletedVideos);
+            DisplayVideos(deleted);
+        }
     }
 }
+
