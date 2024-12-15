@@ -130,7 +130,7 @@ namespace YoutubePlaylists
                     labelList.ElementAt(i).Text = item.Title;
                     labelDescList.ElementAt(i).Text = item.Description;
                     //labelVideoIdList.ElementAt(i).Font = new Font("Courier New", 7.0F, FontStyle.Regular);
-                    if(lblPlaylistName.Text == "Compared Deleted")
+                    if(lblPlaylistName.Text.Contains("Compared."))
                         labelVideoIdList.ElementAt(i).Text = $"{item.PlaylistTitle}     Id: {item.VideoId}";
                     else
                         labelVideoIdList.ElementAt(i).Text = $"Id: {item.VideoId}";
@@ -407,7 +407,11 @@ namespace YoutubePlaylists
             }
 
             // Display deleted videos
-            lblPlaylistName.Text = "Compared Deleted";
+            if(deletedVideos.Count() == 0)
+                lblPlaylistName.Text = "Compared. No deleted found.";
+            else
+
+            lblPlaylistName.Text = "Compared. Showing deleted.";
             List<PlaylistOutput.Videos> deleted = YoutubeVideo.ConvertYoutubeVideoList(deletedVideos);
             DisplayVideos(deleted);
         }
