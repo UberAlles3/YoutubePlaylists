@@ -91,7 +91,7 @@ namespace YoutubePlaylists
         private async void labelList_Click(object sender, EventArgs e)
         {
             int element = (int)((Label)sender).Tag;
-            lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", " - ").Replace(",", " - ");
+            lblPlaylistName.Text = Playlists.ElementAt(element).Title.Replace("/", "-").Replace(",", "-");
             _playlistId = Playlists.ElementAt(element).PlaylistId;
 
             FormDisplayWaitForTask(WaitEnum.Hide);
@@ -379,28 +379,31 @@ namespace YoutubePlaylists
                    current = currentVideos[currentVideoIndex];
 
                 if (string.Compare($"{backup.PlaylistTitle}{backup.Title}", $"{current.PlaylistTitle}{current.Title}") == 0)
-                {
+                {   // found
                     backupVideoIndex++;
                     currentVideoIndex++;
                     continue;
                 }
                 else if (string.Compare($"{backup.PlaylistTitle}{backup.Title}", $"{current.PlaylistTitle}{current.Title}") < 0)
-                {    // backup is less than current meaning a backup video is not found in current list
+                {   //deleted
+                    // backup is less than current meaning a backup video is not found in current list
                     backupVideoIndex++;
 
                     // Try to find if it was moved to another playlist
                     List<YoutubeVideo> foundVideos = currentVideos.Where(x => x.VideoId == backup.VideoId).ToList();
 
-                    if (foundVideos.Count > 0) // moved
+                    if (foundVideos.Count > 0) // moved 
                         movedVideos.Add(foundVideos[0]);
                     else
                     {
-                        backup.Description = "(video is unavailable) " + backup.Description;
+                        if (backup.Title == "Deleted video")
+                            backup.Description = "(Deleted video) " + backup.Description;
+
                         deletedVideos.Add(backup);
                     }
                 }
                 else 
-                {
+                {   // new added
                     currentVideoIndex++;
                     addedVideos.Add(current);
                 }

@@ -45,7 +45,8 @@ namespace YoutubePlaylists
             foreach (YoutubeVideo item in youtubeVideoList)
             {
                 List<Thumbnails> t = new List<Thumbnails>();
-                t.Add(new Thumbnails() { ImageUri = new Uri(item.ImageUri) });
+                if(!(item.Title.Contains("Private video") || item.Title.Contains("Deleted video")) && item.ImageUri != "")
+                    t.Add(new Thumbnails() { ImageUri = new Uri(item.ImageUri) });
 
                 videos.Add(new PlaylistOutput.Videos
                 {

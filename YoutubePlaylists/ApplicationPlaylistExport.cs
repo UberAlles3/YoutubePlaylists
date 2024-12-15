@@ -12,7 +12,7 @@ namespace YoutubePlaylists
     {
         public static void ExportPlaylist(List<PlaylistOutput.Videos> videos, string playlistId, string playlistName)
         {
-            playlistName = playlistName.Replace("/", "-");
+            playlistName = playlistName.Replace("/", "-").Replace(",", "-");
             string path = Path.Combine(Settings.ExportPath, "Playlist." + playlistName + ".csv");
 
             using (var file = File.CreateText(path))
